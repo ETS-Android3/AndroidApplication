@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    socket = new Socket("10.0.2.2", Server.PORT);
+                    socket = new Socket(Server.IP, Server.PORT);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

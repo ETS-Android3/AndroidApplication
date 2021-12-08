@@ -7,28 +7,23 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 public class Server {
-    private static final SortedMap<Object, Object> connections = Collections.synchronizedSortedMap(new TreeMap<>());
-    public static final String IP = "127.0.0.1";
+    private static final List<Connection> connections = Collections.synchronizedList(new LinkedList<Connection>());
+    public static final String IP = "10.0.2.2";
     public static final Integer PORT = 7194;
     private static final Integer TIMEOUT = 500;
     private static final String CLOSE_COMMAND = "CLOSE" ;
     private volatile Boolean stop = false;
-    private Integer connectionID = 0;
 
-    private Server() {}
+    private Server() { }
 
     private static Server getInstance(){ return AppServerHolder.INSTANCE; }
 
     private static class AppServerHolder{ private static final Server INSTANCE = new Server(); }
-
-    //public static Map<Integer, Connection> getConnections() { return connections; }
-
 
     private void start() throws IOException {
         startFinishCommand();
@@ -41,38 +36,32 @@ public class Server {
             serverSocket.setSoTimeout(TIMEOUT);
             try {
                 socket = serverSocket.accept();
-                Connection serverConnection = new Connection(connectionID, socket);
+                Connection serverConnection = new Connection(socket);
                 serverConnection.start();
-                connections.put(connectionID, serverConnection);
+                connections.add(serverConnection);
                 System.out.println("[SERVER]:USER CONNECTED.CONNECTED USERS:" + connections.size());
-                connectionID++;
             }catch (Exception exception){ }
+            finally { serverSocket.close(); }
 
         }
         serverSocket.close();
         System.out.println("[SERVER]:SERVER CLOSED");
     }
 
-
-
-
     private void startFinishCommand() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
                 while (true) {
                     String command;
-                    try {
+                    try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))){
                         command = bufferedReader.readLine();
                         if (command.toUpperCase(Locale.ROOT).equals(CLOSE_COMMAND)) {
                             stop = true;
                             bufferedReader.close();
                             break;
                         }
-                    } catch (IOException e) {
-                        throw new RuntimeException();
-                    }
+                    } catch (IOException e) { throw new RuntimeException(); }
                 }
             }
         }).start();
