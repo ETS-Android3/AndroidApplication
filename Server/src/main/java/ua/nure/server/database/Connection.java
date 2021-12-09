@@ -10,11 +10,12 @@ import java.sql.Statement;
 
 import oracle.ons.Cli;
 import ua.nure.domain.entity.Client;
-import ua.nure.server.Server;
 
 class Conn {
     public static void main(String[] args) throws IOException, SQLException {
         Client client1 = new Client("vladyslav.kryvenko@nure.ua", "Кривенко Владислав Витальевич", "VK07162002", "+38095509171");
+        ConnectionPool connectionPool = new ConnectionPool( "jdbc:oracle:thin:@localhost:1521:XE","VALEK", "VK07162002", 1);
+
 
         /*try (Connection conn = DriverManager.getConnection(
                 "jdbc:oracle:thin:@localhost:1521:XE", "VALEK", "VK07162002")) {

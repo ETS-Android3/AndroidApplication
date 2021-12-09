@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.net.Socket;
 
 import ua.nure.androidapplication.databinding.ActivityMainBinding;
-import ua.nure.server.Server;
 
 public class MainActivity extends AppCompatActivity {
     private Socket socket = null;
@@ -27,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        new Thread(new Runnable() {
+       /* new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -36,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        }).start();*/
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());

@@ -1,4 +1,4 @@
-package ua.nure.server;
+package ua.nure.server.application;
 
 
 import java.io.BufferedReader;
@@ -10,6 +10,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+
+import ua.nure.server.Connection;
+import ua.nure.server.exception.ConnectionException;
 
 public class Server {
     private static final List<Connection> connections = Collections.synchronizedList(new LinkedList<Connection>());
@@ -41,7 +44,6 @@ public class Server {
                 connections.add(serverConnection);
                 System.out.println("[SERVER]:USER CONNECTED.CONNECTED USERS:" + connections.size());
             }catch (Exception exception){ }
-            finally { serverSocket.close(); }
 
         }
         serverSocket.close();
@@ -67,8 +69,8 @@ public class Server {
         }).start();
     }
 
-    public static void main(String[] args) throws IOException {
-        Server server = Server.getInstance();
-        server.start();
+    public static void main(String[] args) throws ConnectionException, IOException {
+        new ServerContext().start();
+        Server.getInstance().start();
     }
 }
