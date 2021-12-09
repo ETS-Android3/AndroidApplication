@@ -9,4 +9,7 @@ java {
 
 dependencies {
     api fileTree(dir: 'C:\\Users\\user\\AndroidStudioProjects\\AndroidApplication\\Server\\Oracle\\ojdbc11-full', include: ['*.aar', '*.jar'], exclude: [])
+    implementation project(path: ':Domain')
+    implementation project(path: ':Domain')
+    implementation project(path: ':Domain')
 }

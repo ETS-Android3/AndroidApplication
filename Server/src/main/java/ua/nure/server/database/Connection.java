@@ -1,5 +1,6 @@
 package ua.nure.server.database;
 
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,11 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import oracle.ons.Cli;
+import ua.nure.domain.entity.Client;
 import ua.nure.server.Server;
 
 class Conn {
     public static void main(String[] args) throws IOException, SQLException {
-        try (Connection conn = DriverManager.getConnection(
+        Client client1 = new Client("vladyslav.kryvenko@nure.ua", "Кривенко Владислав Витальевич", "VK07162002", "+38095509171");
+
+        /*try (Connection conn = DriverManager.getConnection(
                 "jdbc:oracle:thin:@localhost:1521:XE", "VALEK", "VK07162002")) {
 
             if (conn != null) {
@@ -29,6 +34,6 @@ class Conn {
             System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 }
