@@ -9,6 +9,7 @@ public class CarBody extends Entity {
     Integer height;
     Integer weight;
     Integer width;
+    String model;
 
     public CarBody(Integer identifier,
                    String usability,
@@ -16,7 +17,8 @@ public class CarBody extends Entity {
                    Integer length,
                    Integer height,
                    Integer weight,
-                   Integer width) {
+                   Integer width,
+                   String model) {
         super(identifier);
         this.usability = usability;
         this.bodyType = bodyType;
@@ -24,6 +26,7 @@ public class CarBody extends Entity {
         this.height = height;
         this.weight = weight;
         this.width = width;
+        this.model = model;
     }
 
     public String getUsability() {
@@ -74,6 +77,14 @@ public class CarBody extends Entity {
         this.width = width;
     }
 
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
     @Override
     public boolean equals(Object object) {
         return object instanceof CarBody && ((CarBody) object).getIdentifier().equals(getIdentifier());
@@ -81,7 +92,7 @@ public class CarBody extends Entity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), usability, bodyType, length, height, weight, width);
+        return Objects.hash(super.hashCode(), usability, bodyType, length, height, weight, width, model);
     }
 
     @Override
@@ -90,6 +101,7 @@ public class CarBody extends Entity {
                 "identifier='" + getIdentifier() + '\'' +
                 ", usability='" + usability + '\'' +
                 ", bodyType='" + bodyType + '\'' +
+                ", model='" + model + '\'' +
                 ", length=" + length +
                 ", height=" + height +
                 ", weight=" + weight +

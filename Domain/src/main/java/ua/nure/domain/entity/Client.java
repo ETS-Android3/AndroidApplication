@@ -5,9 +5,10 @@ import java.util.Objects;
 public class Client extends Entity {
     String phoneNumber;
     String password;
+    String email;
     String name;
 
-    public Client(Object identifier, String name, String password, String phoneNumber) {
+    public Client(Integer identifier, String email, String name, String password, String phoneNumber) {
         super(identifier);
         this.phoneNumber = phoneNumber;
         this.password = password;
@@ -20,6 +21,14 @@ public class Client extends Entity {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -45,13 +54,14 @@ public class Client extends Entity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), phoneNumber, password, name);
+        return Objects.hash(super.hashCode(), email, phoneNumber, password, name);
     }
 
     @Override
     public String toString() {
         return "Client{" +
                 "identifier='" + getIdentifier() + '\'' +
+                ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +

@@ -1,17 +1,17 @@
 package ua.nure.domain.entity;
 
 public class Entity {
-    private Object identifier;
+    private Integer identifier;
 
     private Entity() {
         identifier = -1;
     }
 
-    public Entity(Object identifier) {
+    public Entity(Integer identifier) {
         this.identifier = identifier;
     }
 
-    public Object getIdentifier() {
+    public Integer getIdentifier() {
         return identifier;
     }
 

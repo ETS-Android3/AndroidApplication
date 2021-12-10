@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Car extends Entity {
+    Integer serialNumber;
     String manufacturerCountry;
     Date manufactureDate;
     String engineModel;
@@ -14,6 +15,7 @@ public class Car extends Entity {
     Long price;
 
     public Car(Integer identifier,
+               Integer serialNumber,
                String manufacturerCountry,
                Date manufactureDate,
                String engineModel,
@@ -24,6 +26,7 @@ public class Car extends Entity {
                Long price) {
         super(identifier);
         this.manufacturerCountry = manufacturerCountry;
+        this.serialNumber = serialNumber;
         this.manufactureDate = manufactureDate;
         this.engineModel = engineModel;
         this.bodyModel = bodyModel;
@@ -39,6 +42,14 @@ public class Car extends Entity {
 
     public void setManufacturerCountry(String manufacturerCountry) {
         this.manufacturerCountry = manufacturerCountry;
+    }
+
+    public Integer getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(Integer serialNumber) {
+        this.serialNumber = serialNumber;
     }
 
     public Date getManufactureDate() {
@@ -104,7 +115,7 @@ public class Car extends Entity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), manufacturerCountry, manufactureDate, engineModel, bodyModel, photoPath, carLine, brand, price);
+        return Objects.hash(super.hashCode(), manufacturerCountry, serialNumber, manufactureDate, engineModel, bodyModel, photoPath, carLine, brand, price);
     }
 
     @Override
@@ -119,6 +130,7 @@ public class Car extends Entity {
                 ", carLine='" + carLine + '\'' +
                 ", brand='" + brand + '\'' +
                 ", price=" + price +
+                ", serialNumber=" + serialNumber +
                 '}';
     }
 }

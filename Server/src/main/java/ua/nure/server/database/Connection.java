@@ -13,7 +13,7 @@ import ua.nure.domain.entity.Client;
 
 class Conn {
     public static void main(String[] args) throws IOException, SQLException {
-        Client client1 = new Client("vladyslav.kryvenko@nure.ua", "Кривенко Владислав Витальевич", "VK07162002", "+38095509171");
+        Client client1 = new Client(1, "vladyslav.kryvenko@nure.ua", "Кривенко Владислав Витальевич", "VK07162002", "+38095509171");
         ConnectionPool connectionPool = new ConnectionPool( "jdbc:oracle:thin:@localhost:1521:XE","VALEK", "VK07162002", 1);
 
 

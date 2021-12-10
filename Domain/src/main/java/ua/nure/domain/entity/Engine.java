@@ -4,11 +4,12 @@ import java.util.Objects;
 
 public class Engine extends Entity {
     Integer volume;
+    String model;
     String brand;
     String type;
     String code;
 
-    public Engine(Integer identifier, Integer volume, String brand, String type, String code) {
+    public Engine(Integer identifier, Integer volume, String model, String brand, String type, String code) {
         super(identifier);
         this.volume = volume;
         this.brand = brand;
@@ -55,7 +56,7 @@ public class Engine extends Entity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), volume, brand, type, code);
+        return Objects.hash(super.hashCode(), volume, model, brand, type, code);
     }
 
     @Override
@@ -63,6 +64,7 @@ public class Engine extends Entity {
         return "Engine{" +
                 "identifier='" + getIdentifier() + '\'' +
                 ", volume=" + volume + '\'' +
+                ", model=" + volume + '\'' +
                 ", brand='" + brand + '\'' +
                 ", type='" + type + '\'' +
                 ", code='" + code + '\'' +
