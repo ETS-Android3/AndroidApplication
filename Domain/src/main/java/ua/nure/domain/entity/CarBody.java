@@ -98,7 +98,7 @@ public class CarBody extends Entity {
     @Override
     public String toString() {
         return "CarBody{" +
-                "identifier='" + getIdentifier() + '\'' +
+                "identifier=" + getIdentifier() +
                 ", usability='" + usability + '\'' +
                 ", bodyType='" + bodyType + '\'' +
                 ", model='" + model + '\'' +

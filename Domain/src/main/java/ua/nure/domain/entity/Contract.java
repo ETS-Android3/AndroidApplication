@@ -52,8 +52,8 @@ public class Contract extends Entity {
     @Override
     public String toString() {
         return "Contract{" +
-                "identifier='" + getIdentifier() + '\'' +
-                ", carSerialNumber=" + carSerialNumber + '\'' +
+                "identifier=" + getIdentifier() +
+                ", carSerialNumber=" + carSerialNumber +
                 ", clientEmail='" + clientEmail + '\'' +
                 ", date=" + date +
                 '}';

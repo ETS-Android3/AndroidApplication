@@ -1,6 +1,6 @@
 package ua.nure.domain.entity;
 
-public class Entity {
+public abstract class Entity {
     private Integer identifier;
 
     private Entity() {
@@ -21,7 +21,7 @@ public class Entity {
 
     @Override
     public boolean equals(Object object) {
-        return object instanceof Entity && ((Entity) object).identifier == identifier;
+        return object instanceof Entity && ((Entity) object).identifier.equals(identifier);
     }
 
     @Override

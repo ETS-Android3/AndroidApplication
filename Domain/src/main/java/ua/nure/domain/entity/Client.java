@@ -13,6 +13,7 @@ public class Client extends Entity {
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.name = name;
+        this.email = email;
     }
 
     public String getPhoneNumber() {
@@ -49,7 +50,7 @@ public class Client extends Entity {
 
     @Override
     public boolean equals(Object object) {
-        return object instanceof Client && ((Client) object).getIdentifier().equals(getIdentifier());
+        return object instanceof Client && ((Client) object).getEmail().equals(email);
     }
 
     @Override
@@ -60,7 +61,7 @@ public class Client extends Entity {
     @Override
     public String toString() {
         return "Client{" +
-                "identifier='" + getIdentifier() + '\'' +
+                "identifier=" + getIdentifier() +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", password='" + password + '\'' +

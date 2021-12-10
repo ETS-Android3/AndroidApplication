@@ -15,6 +15,7 @@ public class Engine extends Entity {
         this.brand = brand;
         this.type = type;
         this.code = code;
+        this.model = model;
     }
 
     public Integer getVolume() {
@@ -49,6 +50,14 @@ public class Engine extends Entity {
         this.code = code;
     }
 
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
     @Override
     public boolean equals(Object object) {
         return object instanceof Engine && ((Engine) object).getIdentifier().equals(getIdentifier());
@@ -62,9 +71,9 @@ public class Engine extends Entity {
     @Override
     public String toString() {
         return "Engine{" +
-                "identifier='" + getIdentifier() + '\'' +
-                ", volume=" + volume + '\'' +
-                ", model=" + volume + '\'' +
+                "identifier=" + getIdentifier() +
+                ", volume=" + volume +
+                ", model='" + model + '\'' +
                 ", brand='" + brand + '\'' +
                 ", type='" + type + '\'' +
                 ", code='" + code + '\'' +

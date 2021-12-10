@@ -4,8 +4,8 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Car extends Entity {
-    Integer serialNumber;
     String manufacturerCountry;
+    Integer serialNumber;
     Date manufactureDate;
     String engineModel;
     String bodyModel;
@@ -121,7 +121,7 @@ public class Car extends Entity {
     @Override
     public String toString() {
         return "Car{" +
-                "identifier='" + getIdentifier() + '\'' +
+                "identifier=" + getIdentifier() +
                 ", manufacturerCountry='" + manufacturerCountry + '\'' +
                 ", manufactureDate=" + manufactureDate +
                 ", engineModel='" + engineModel + '\'' +

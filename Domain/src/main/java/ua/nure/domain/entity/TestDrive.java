@@ -51,8 +51,8 @@ public class TestDrive extends Entity {
     @Override
     public String toString() {
         return "TestDrive{" +
-                "identifier='" + getIdentifier() + '\'' +
-                ", carSerialNumber=," + carSerialNumber + '\'' +
+                "identifier=" + getIdentifier() +
+                ", carSerialNumber='" + carSerialNumber + '\'' +
                 ", clientEmail='" + clientEmail + '\'' +
                 ", score=" + score +
                 '}';
