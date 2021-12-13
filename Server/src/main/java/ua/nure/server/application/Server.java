@@ -11,11 +11,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import ua.nure.server.Connection;
+import ua.nure.server.ServerConnection;
 import ua.nure.server.exception.ConnectionException;
 
 public class Server {
-    private static final List<Connection> connections = Collections.synchronizedList(new LinkedList<Connection>());
+    private static final List<ServerConnection> SERVER_CONNECTIONS = Collections.synchronizedList(new LinkedList<>());
     public static final String IP = "10.0.2.2";
     public static final Integer PORT = 7194;
     private static final Integer TIMEOUT = 500;
@@ -24,9 +24,17 @@ public class Server {
 
     private Server() { }
 
-    private static Server getInstance(){ return AppServerHolder.INSTANCE; }
+    private static Server getInstance() {
+        return AppServerHolder.INSTANCE;
+    }
 
-    private static class AppServerHolder{ private static final Server INSTANCE = new Server(); }
+    private static class AppServerHolder {
+        private static final Server INSTANCE = new Server();
+    }
+
+    public static List<ServerConnection> getConnections(){
+        return SERVER_CONNECTIONS;
+    }
 
     private void start() throws IOException {
         startFinishCommand();
@@ -39,10 +47,10 @@ public class Server {
             serverSocket.setSoTimeout(TIMEOUT);
             try {
                 socket = serverSocket.accept();
-                Connection serverConnection = new Connection(socket);
+                ServerConnection serverConnection = new ServerConnection(socket);
                 serverConnection.start();
-                connections.add(serverConnection);
-                System.out.println("[SERVER]:USER CONNECTED.CONNECTED USERS:" + connections.size());
+                SERVER_CONNECTIONS.add(serverConnection);
+                System.out.println("[SERVER]:USER CONNECTED.CONNECTED USERS:" + SERVER_CONNECTIONS.size());
             }catch (Exception exception){ }
 
         }
@@ -61,6 +69,7 @@ public class Server {
                         if (command.toUpperCase(Locale.ROOT).equals(CLOSE_COMMAND)) {
                             stop = true;
                             bufferedReader.close();
+                            System.out.println("[SERVER]: CURRENT COUNT OF USERS:" + SERVER_CONNECTIONS.size());
                             break;
                         }
                     } catch (IOException e) { throw new RuntimeException(); }
