@@ -2,8 +2,17 @@ package ua.nure.server.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.sql.Types;
+import java.time.LocalDateTime;
+import java.util.stream.StreamSupport;
 
+import javax.annotation.processing.SupportedSourceVersion;
+
+import ua.nure.domain.entity.Client;
 import ua.nure.server.exception.ConnectionException;
 
 public class ConnectionPool {
@@ -76,6 +85,29 @@ public class ConnectionPool {
                 throw new ConnectionException(exception.getMessage());
             }
             isFree = true;
+        }
+
+        private PreparedStatement prepareStatement(String sqlCommand, Object[] arguments) throws SQLException {
+            PreparedStatement preparedStatement = connection.prepareStatement(sqlCommand);
+            for (int i = 0; i < arguments.length; i++) {
+                if (arguments[i] == null) {
+                    System.out.print("null,");
+                    preparedStatement.setNull(i + 1, Types.NULL);
+                } else {
+                    System.out.print(arguments[i].toString() + ",");
+                    preparedStatement.setString(i + 1, arguments[i].toString());
+                }
+             }
+            return preparedStatement;
+        }
+
+        public ResultSet executeQuery(String sqlCommand, Object... args) throws ConnectionException {
+            try {
+                PreparedStatement preparedStatement = prepareStatement(sqlCommand, args);
+                return preparedStatement.executeQuery();
+            } catch (SQLException ex) {
+                throw new ConnectionException(ex.getMessage());
+            }
         }
     }
 }

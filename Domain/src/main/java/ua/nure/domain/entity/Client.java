@@ -5,15 +5,15 @@ import java.util.Objects;
 public class Client extends Entity {
     String phoneNumber;
     String password;
-    String email;
+    String login;
     String name;
 
-    public Client(Integer identifier, String email, String name, String password, String phoneNumber) {
+    public Client(Integer identifier, String login, String name, String password, String phoneNumber) {
         super(identifier);
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.name = name;
-        this.email = email;
+        this.login = login;
     }
 
     public String getPhoneNumber() {
@@ -24,12 +24,12 @@ public class Client extends Entity {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getEmail() {
-        return email;
+    public String getLogin() {
+        return login;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {
@@ -50,19 +50,19 @@ public class Client extends Entity {
 
     @Override
     public boolean equals(Object object) {
-        return object instanceof Client && ((Client) object).getEmail().equals(email);
+        return object instanceof Client && ((Client) object).getLogin().equals(login);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), email, phoneNumber, password, name);
+        return Objects.hash(super.hashCode(), login, phoneNumber, password, name);
     }
 
     @Override
     public String toString() {
         return "Client{" +
                 "identifier=" + getIdentifier() +
-                ", email='" + email + '\'' +
+                ", login='" + login + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
