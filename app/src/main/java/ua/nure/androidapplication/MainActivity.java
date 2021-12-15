@@ -14,28 +14,29 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
 import ua.nure.androidapplication.databinding.ActivityMainBinding;
+import ua.nure.server.application.Server;
 
 public class MainActivity extends AppCompatActivity {
     private Socket socket = null;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private DataOutputStream dataOutputStream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       /* new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    socket = new Socket(Server.IP, Server.PORT);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        new Thread(() -> {
+            try {
+                socket = new Socket(Server.IP, Server.PORT);
+                dataOutputStream = new DataOutputStream(socket.getOutputStream());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        }).start();*/
+        }).start();
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -67,6 +68,18 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        new Thread(() -> {
+            try {
+                dataOutputStream.writeBytes("CLOSE\n");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        super.onDestroy();
     }
 
     @Override
