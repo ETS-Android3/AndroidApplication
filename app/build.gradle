@@ -5,6 +5,12 @@ plugins {
 android {
     compileSdk 31
 
+    packagingOptions {
+        exclude 'META-INF/native-image/native-image.properties'
+        exclude 'META-INF/native-image/resource-config.json'
+        exclude 'META-INF/native-image/reflect-config.json'
+        exclude 'META-INF/license.txt'
+    }
     defaultConfig {
         applicationId "ua.nure.androidapplication"
         minSdk 21
