@@ -7,7 +7,9 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Locale;
 
+import ua.nure.domain.entity.Client;
 import ua.nure.server.application.Server;
+import ua.nure.server.database.repository.ClientRepository;
 
 public class ServerConnection extends Thread {
     public volatile Boolean isDisconnected = false;
@@ -32,6 +34,21 @@ public class ServerConnection extends Thread {
             while (!isDisconnected) {
                 request = bufferedReader.readLine();
                 switch (request) {
+                    case "LOGIN":
+                        String login = bufferedReader.readLine();
+                        String password = bufferedReader.readLine();
+                        System.out.println("[" + getConnectionName() + "]:" + "LOGIN CASE STARTED");
+                        ClientRepository clientRepository = new ClientRepository(Server.getConnectionPool().getConnection());
+                        Client client = clientRepository.getByLogin(login);
+                        System.out.println(client);
+                        if (!password.equals(client.getPassword())){
+                            dataOutputStream.writeBytes("NO\n");
+                        } else {
+                            dataOutputStream.writeBytes("YES\n");
+                        }
+
+                        System.out.println("[" + getConnectionName() + "]:" + "LOGIN CASE FINISHED");
+                        break;
                     case "CLOSE":
                         System.out.println("[" + getConnectionName() + "]:" + "CLOSE CASE STARTED");
                         closeAll();

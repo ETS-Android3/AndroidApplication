@@ -12,10 +12,12 @@ import java.util.List;
 import java.util.Locale;
 
 import ua.nure.server.ServerConnection;
+import ua.nure.server.database.ConnectionPool;
 import ua.nure.server.exception.ConnectionException;
 
 public class Server {
     private static final List<ServerConnection> SERVER_CONNECTIONS = Collections.synchronizedList(new LinkedList<>());
+    private static ConnectionPool connectionPool;
     public static final String IP = "10.0.2.2";
     public static final Integer PORT = 7194;
     private static final Integer TIMEOUT = 500;
@@ -36,13 +38,18 @@ public class Server {
         return SERVER_CONNECTIONS;
     }
 
-    private void start() throws IOException {
+    public static ConnectionPool getConnectionPool() {
+        return connectionPool;
+    }
+
+    private void start() throws IOException, ConnectionException {
         startFinishCommand();
 
         ServerSocket serverSocket = new ServerSocket(PORT);
         System.out.println("[SERVER]:SERVER STARTED ON PORT:" + PORT);
 
         while (!stop){
+            System.out.println("s");
             Socket socket;
             serverSocket.setSoTimeout(TIMEOUT);
             try {
@@ -79,7 +86,11 @@ public class Server {
     }
 
     public static void main(String[] args) throws ConnectionException, IOException {
-        new ServerContext().start();
+        String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
+        String dbUser = "VALEK";
+        String password = "VK07162002";
+        Integer poolsCount = 5;
+        connectionPool = new ConnectionPool(dbUrl, dbUser, password, poolsCount);
         Server.getInstance().start();
     }
 }

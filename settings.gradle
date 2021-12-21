@@ -10,3 +10,4 @@ rootProject.name = "AndroidApplication"
 include ':app'
 include ':Server'
 include ':Domain'
+include ':myapplication'

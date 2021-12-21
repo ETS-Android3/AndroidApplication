@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="header">ENTER YOUR PERSONAL DATA</string>
+    <string name="user_name">Name</string>
+    <string name="user_login">Email</string>
+    <string name="user_password">Password</string>
+    <string name="confirm">CONFIRM</string>
+
+</resources>
