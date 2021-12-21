@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/emailField" />
 
     <Button
-        android:id="@+id/confirmButton"
+        android:id="@+id/confirmRegistrationButton"
         android:layout_width="258dp"
         android:layout_height="54dp"
         android:layout_marginTop="20dp"
@@ -53,12 +53,13 @@
         android:layout_width="258dp"
         android:layout_height="54dp"
         android:layout_marginTop="20dp"
+        android:onClick="registrationButtonOnClick"
         android:text="SIGN UP"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmButton"
+        app:layout_constraintTop_toBottomOf="@+id/confirmRegistrationButton"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

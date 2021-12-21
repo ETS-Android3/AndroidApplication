@@ -1,4 +1,4 @@
-package ua.nure.myapplication;
+package ua.nure.myapplication.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-public class WarningDialogFragment extends DialogFragment {
+public class WarningDialog extends DialogFragment {
     private final String WARNING = "Все поля должны быть заполнены!";
     private final String POSITIVE_BUTTON_TEXT = "OK";
 

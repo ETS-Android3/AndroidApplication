@@ -27,6 +27,13 @@ public class ClientRepository extends Repository<Client> {
         }
     }
 
+    public void insert(String name, String login, String pass, String phone) throws RepositoryException {
+        try (ResultSet resultSet = myConnection.executeQuery(INSERT_INTO, 4, name, login, pass, phone)) {
+        } catch (SQLException exception) {
+            throw new RepositoryException(exception.getMessage());
+        }
+    }
+
     @Override
     protected Client toEntity(ResultSet resultSet) throws SQLException {
         return new Client(resultSet.getInt("ID"), resultSet.getString("LOGIN"), resultSet.getString("CNAME"),
