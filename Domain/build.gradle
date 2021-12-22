@@ -6,3 +6,7 @@ java {
     sourceCompatibility = JavaVersion.VERSION_1_7
     targetCompatibility = JavaVersion.VERSION_1_7
 }
+
+dependencies {
+    implementation fileTree(dir: 'C:\\Users\\user\\AndroidStudioProjects\\AndroidApplication78\\gson', include: ['*.aar', '*.jar'], exclude: [])
+}

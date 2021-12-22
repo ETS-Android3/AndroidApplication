@@ -15,7 +15,9 @@ import java.util.Map;
 
 import ua.nure.domain.entity.Client;
 import ua.nure.server.ServerConnection;
+import ua.nure.server.commands.ChangePasswordServerCommand;
 import ua.nure.server.commands.Command;
+import ua.nure.server.commands.GetUserServerCommand;
 import ua.nure.server.commands.LoginServerCommand;
 import ua.nure.server.commands.RegistrationServerCommand;
 import ua.nure.server.database.ConnectionPool;
@@ -99,6 +101,8 @@ public class Server {
     private void initializeCommands(){
         commands.put(LoginServerCommand.class.getName(), new LoginServerCommand());
         commands.put(RegistrationServerCommand.class.getName(), new RegistrationServerCommand());
+        commands.put(GetUserServerCommand.class.getName(), new GetUserServerCommand());
+        commands.put(ChangePasswordServerCommand.class.getName(), new ChangePasswordServerCommand());
 
     }
 

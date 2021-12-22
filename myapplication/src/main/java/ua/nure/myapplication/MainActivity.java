@@ -23,7 +23,21 @@ public class MainActivity extends AppCompatActivity {
     private Socket socket = null;
     private static DataOutputStream dataOutputStream;
     private static BufferedReader bufferedReader;
+    private static String login;
+    private static String password;
 
+    public static String getLogin() {
+        return login;
+    }
+    public static void setLogin(String slogin) {
+         login = slogin;
+    }
+    public static String getPassword() {
+        return password;
+    }
+    public static void setPassword(String otherPassword) {
+        password = otherPassword;
+    }
     public static void setState(Boolean sstate) {
         state = sstate;
     }
@@ -57,6 +71,11 @@ public class MainActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
         }
+    }
+
+    public void profileButtonOnClick(View view) {
+        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+        startActivity(intent);
     }
 
     /*public void confirmButtonOnClick(View view) {

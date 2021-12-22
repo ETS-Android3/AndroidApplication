@@ -10,7 +10,7 @@ import ua.nure.server.exception.RepositoryException;
 
 public class ClientRepository extends Repository<Client> {
     private static final String INSERT_INTO = "INSERT INTO CLIENT(ID, CNAME, LOGIN, PASS, PHONE_NUMBER) VALUES (?,?,?,?,?)";
-    private static final String UPDATE = "UPDATE USERS SET LOGIN=?,PASSWORD=?, NAME=? WHERE ID_USER=?";
+    private static final String UPDATE = "UPDATE CLIENT SET PASS=? WHERE ID=?";
     private static final String SELECT_BY_LOGIN = "SELECT * FROM CLIENT WHERE LOGIN=?";
     private static final String SELECT_ALL = "SELECT * FROM CLIENT";
     private static final String SELECT_BY_ID = "SELECT * FROM CLIENT WHERE ID=?";
@@ -22,6 +22,13 @@ public class ClientRepository extends Repository<Client> {
     public Client getByLogin(String login) throws RepositoryException {
         try (ResultSet resultSet = myConnection.executeQuery(SELECT_BY_LOGIN, login)) {
             return toEntityOrNull(resultSet);
+        } catch (SQLException exception) {
+            throw new RepositoryException(exception.getMessage());
+        }
+    }
+
+    public void update(Client client) throws RepositoryException {
+        try (ResultSet resultSet = myConnection.executeQuery(UPDATE, client.getPassword(), client.getIdentifier())) {
         } catch (SQLException exception) {
             throw new RepositoryException(exception.getMessage());
         }

@@ -12,4 +12,5 @@ dependencies {
     implementation project(path: ':Domain')
     implementation project(path: ':Domain')
     implementation project(path: ':Domain')
+    implementation fileTree(dir: 'C:\\Users\\user\\AndroidStudioProjects\\AndroidApplication78\\gson', include: ['*.aar', '*.jar'], exclude: [])
 }

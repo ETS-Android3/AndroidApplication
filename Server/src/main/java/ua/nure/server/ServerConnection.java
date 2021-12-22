@@ -11,6 +11,9 @@ import java.util.Locale;
 
 
 import ua.nure.server.application.Server;
+import ua.nure.server.commands.ChangePasswordServerCommand;
+import ua.nure.server.commands.Command;
+import ua.nure.server.commands.GetUserServerCommand;
 import ua.nure.server.commands.LoginServerCommand;
 import ua.nure.server.commands.RegistrationServerCommand;
 import ua.nure.server.database.repository.ClientRepository;
@@ -48,26 +51,42 @@ public class ServerConnection extends Thread {
         try {
             while (!isDisconnected) {
                 request = bufferedReader.readLine();
+                Command command = null;
                 switch (request) {
                     case "LOGIN":
                         System.out.println("[" + getConnectionName() + "]:" + "LOGIN CASE STARTED");
-                        LoginServerCommand loginServerCommand = (LoginServerCommand) Server.getCommand(LoginServerCommand.class.getName());
-                        loginServerCommand.setLogin(bufferedReader.readLine());
-                        loginServerCommand.setPassword(bufferedReader.readLine());
-                        loginServerCommand.execute();
+                        command = Server.getCommand(LoginServerCommand.class.getName());
+                        ((LoginServerCommand)command).setLogin(bufferedReader.readLine());
+                        ((LoginServerCommand)command).setPassword(bufferedReader.readLine());
+                        command.execute();
                         System.out.println("[" + getConnectionName() + "]:" + "LOGIN CASE FINISHED");
                         break;
                     case "REGISTRATION":
                         System.out.println("[" + getConnectionName() + "]:" + "REGISTRATION CASE STARTED");
-                        RegistrationServerCommand registrationServerCommand = (RegistrationServerCommand) Server.getCommand(RegistrationServerCommand.class.getName());
-                        registrationServerCommand.setLogin(bufferedReader.readLine());
-                        registrationServerCommand.setPassword(bufferedReader.readLine());
-                        registrationServerCommand.setName(bufferedReader.readLine());
-                        registrationServerCommand.setPhone(bufferedReader.readLine());
-                        registrationServerCommand.execute();
+                        command = Server.getCommand(RegistrationServerCommand.class.getName());
+                        ((RegistrationServerCommand)command).setLogin(bufferedReader.readLine());
+                        ((RegistrationServerCommand)command).setPassword(bufferedReader.readLine());
+                        ((RegistrationServerCommand)command).setName(bufferedReader.readLine());
+                        ((RegistrationServerCommand)command).setPhone(bufferedReader.readLine());
+                        command.execute();
                         System.out.println("[" + getConnectionName() + "]:" + "REGISTRATION CASE FINISHED");
                         break;
-
+                    case "GET_USER":
+                        System.out.println("[" + getConnectionName() + "]:" + "GET USER CASE STARTED");
+                        command = Server.getCommand(GetUserServerCommand.class.getName());
+                        ((GetUserServerCommand)command).setLogin(bufferedReader.readLine());
+                        command.execute();
+                        System.out.println("[" + getConnectionName() + "]:" + "GET USER CASE FINISHED");
+                        break;
+                    case "CHANGE_PASSWORD_COMMAND":
+                        System.out.println("[" + getConnectionName() + "]:" + "CHANGE PASSWORD CASE STARTED");
+                        command = Server.getCommand(ChangePasswordServerCommand.class.getName());
+                        ((ChangePasswordServerCommand)command).setLogin(bufferedReader.readLine());
+                        ((ChangePasswordServerCommand)command).setOldPassword(bufferedReader.readLine());
+                        ((ChangePasswordServerCommand)command).setNewPassword(bufferedReader.readLine());
+                        command.execute();
+                        System.out.println("[" + getConnectionName() + "]:" + "CHANGE PASSWORD CASE FINISHED");
+                        break;
                     case "CLOSE":
                         System.out.println("[" + getConnectionName() + "]:" + "CLOSE CASE STARTED");
                         closeAll();
