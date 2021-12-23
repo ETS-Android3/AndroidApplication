@@ -12,21 +12,19 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-import ua.nure.domain.entity.Client;
-import ua.nure.server.ServerConnection;
 import ua.nure.server.commands.ChangePasswordServerCommand;
-import ua.nure.server.commands.Command;
+import ua.nure.server.commands.ServerCommand;
 import ua.nure.server.commands.GetUserServerCommand;
 import ua.nure.server.commands.LoginServerCommand;
 import ua.nure.server.commands.RegistrationServerCommand;
 import ua.nure.server.database.ConnectionPool;
-import ua.nure.server.database.repository.ClientRepository;
 import ua.nure.server.exception.ConnectionException;
 
 public class Server {
     private static final List<ServerConnection> SERVER_CONNECTIONS = Collections.synchronizedList(new LinkedList<>());
-    private static  Map<String, Command> commands = new HashMap<>();
+    private static final Map<String, ServerCommand> commands = new HashMap<>();
     private static ConnectionPool connectionPool;
     public static final String IP = "10.0.2.2";
     public static final Integer PORT = 7194;
@@ -34,7 +32,18 @@ public class Server {
     private static final String CLOSE_COMMAND = "CLOSE" ;
     private volatile Boolean stop = false;
 
-    private Server() { }
+    private Server() {
+        ResourceBundle resource = ResourceBundle.getBundle("DatabaseConfig");
+        String dbUrl = resource.getString("db.url");
+        String dbUser = resource.getString("db.user");
+        String password = resource.getString("db.password");
+        String poolsCount = resource.getString("dc.count");
+        try {
+            connectionPool = new ConnectionPool(dbUrl, dbUser, password, Integer.parseInt(poolsCount));
+        } catch (ConnectionException throwable) {
+            throwable.printStackTrace();
+        }
+    }
 
     private static Server getInstance() {
         return AppServerHolder.INSTANCE;
@@ -43,10 +52,10 @@ public class Server {
     private static class AppServerHolder {
         private static final Server INSTANCE = new Server();
     }
-    public static Command getCommand(String command) {
+
+    public static ServerCommand getCommand(String command) {
         return commands.get(command);
     }
-
 
     public static List<ServerConnection> getConnections(){
         return SERVER_CONNECTIONS;
@@ -56,7 +65,7 @@ public class Server {
         return connectionPool;
     }
 
-    private void start() throws IOException, ConnectionException {
+    private void start() throws IOException {
         startFinishCommand();
         initializeCommands();
         ServerSocket serverSocket = new ServerSocket(PORT);
@@ -79,21 +88,18 @@ public class Server {
     }
 
     private void startFinishCommand() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (true) {
-                    String command;
-                    try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))){
-                        command = bufferedReader.readLine();
-                        if (command.toUpperCase(Locale.ROOT).equals(CLOSE_COMMAND)) {
-                            stop = true;
-                            bufferedReader.close();
-                            System.out.println("[SERVER]: CURRENT COUNT OF USERS:" + SERVER_CONNECTIONS.size());
-                            break;
-                        }
-                    } catch (IOException e) { throw new RuntimeException(); }
-                }
+        new Thread(() -> {
+            while (true) {
+                String command;
+                try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))){
+                    command = bufferedReader.readLine();
+                    if (command.toUpperCase(Locale.ROOT).equals(CLOSE_COMMAND)) {
+                        stop = true;
+                        bufferedReader.close();
+                        System.out.println("[SERVER]: CURRENT COUNT OF USERS:" + SERVER_CONNECTIONS.size());
+                        break;
+                    }
+                } catch (IOException e) { throw new RuntimeException(); }
             }
         }).start();
     }
@@ -103,16 +109,9 @@ public class Server {
         commands.put(RegistrationServerCommand.class.getName(), new RegistrationServerCommand());
         commands.put(GetUserServerCommand.class.getName(), new GetUserServerCommand());
         commands.put(ChangePasswordServerCommand.class.getName(), new ChangePasswordServerCommand());
-
     }
 
-
-    public static void main(String[] args) throws ConnectionException, IOException {
-        String dbUrl = "jdbc:oracle:thin:@localhost:1521:XE";
-        String dbUser = "VALEK";
-        String password = "VK07162002";
-        Integer poolsCount = 5;
-        connectionPool = new ConnectionPool(dbUrl, dbUser, password, poolsCount);
+    public static void main(String[] args) throws IOException {
         Server.getInstance().start();
     }
 }

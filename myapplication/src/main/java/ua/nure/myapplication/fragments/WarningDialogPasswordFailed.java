@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 public class WarningDialogPasswordFailed extends DialogFragment {
-    private final String WARNING = "Пароли не совпадают.\nПопробуйте еще раз!";
+    private final String WARNING = "Неверный пароль.\nПопробуйте еще раз!";
     private final String POSITIVE_BUTTON_TEXT = "OK";
 
     @NonNull

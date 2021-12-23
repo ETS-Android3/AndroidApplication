@@ -1,22 +1,15 @@
 package ua.nure.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.Socket;
-
+import ua.nure.domain.entity.CommandsList;
 import ua.nure.myapplication.commands.ClientCommand;
-import ua.nure.myapplication.fragments.WarningDialog;
+import ua.nure.myapplication.commands.LoginClientCommand;
+import ua.nure.myapplication.fragments.WarningDialogFilingTheGaps;
 import ua.nure.myapplication.fragments.WarningDialogNoExistingUser;
-import ua.nure.server.application.Server;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,41 +20,32 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void confirmButtonOnClick(View view) {
-        EditText email = findViewById(R.id.emailField);
-        EditText password = findViewById(R.id.passwordField);
+        EditText emailEdit = findViewById(R.id.emailField);
+        EditText passwordEdit = findViewById(R.id.passwordField);
+        String email = emailEdit.getText().toString().replace(CommandsList.GAP_STRING, CommandsList.EMPTY_STRING);
+        String password = passwordEdit.getText().toString().replace(CommandsList.GAP_STRING, CommandsList.EMPTY_STRING);
 
-        if (email.getText().toString().equals("") || password.getText().toString().equals("")) {
-            WarningDialog warningDialogFragment = new WarningDialog();
-            warningDialogFragment.show(getSupportFragmentManager(), "CUSTOM");
-            // fix " "
+        if (email.equals(CommandsList.EMPTY_STRING) || password.equals(CommandsList.EMPTY_STRING)) {
+            MainActivity.getWarningsHelper().showFragment(this, WarningDialogFilingTheGaps.class.getName());
         } else  {
             new Thread(() -> {
-                try {
-                    DataOutputStream dataOutputStream = MainActivity.getDataOutputStream();
-                    BufferedReader bufferedReader = MainActivity.getBufferedReader();
-                    dataOutputStream.writeBytes("LOGIN\n" +
-                            email.getText().toString() + "\n" +
-                            password.getText().toString() + "\n"); // fix Login
+                LoginClientCommand loginClientCommand = new LoginClientCommand();
+                loginClientCommand.setLogin(email);
+                loginClientCommand.setPassword(password);
 
-                    if (bufferedReader.readLine().equals(ClientCommand.NEGATIVE_ANSWER)) {
-                        WarningDialogNoExistingUser warningDialogNoExistingUser = new WarningDialogNoExistingUser();
-                        warningDialogNoExistingUser.show(getSupportFragmentManager(), "CUSTOM");
-                    } else {
-                        MainActivity.setState(true);
-                        MainActivity.setPassword(password.getText().toString());
-                        MainActivity.setLogin(email.getText().toString());
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-                        this.finish();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (loginClientCommand.execute().equals(ClientCommand.NEGATIVE_ANSWER)) {
+                    MainActivity.getWarningsHelper().showFragment(this, WarningDialogNoExistingUser.class.getName());
+                } else {
+                    MainActivity.setState(true);
+                    MainActivity.setPassword(password);
+                    MainActivity.setLogin(email);
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    this.finish();
                 }
             }).start();
-
         }
-
     }
 
     public void registrationButtonOnClick(View view) {

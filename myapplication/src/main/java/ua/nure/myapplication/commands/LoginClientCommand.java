@@ -8,25 +8,30 @@ import java.io.IOException;
 import ua.nure.domain.entity.CommandsList;
 import ua.nure.myapplication.MainActivity;
 
-public class ChangePasswordClientCommand extends ClientCommand {
+public class LoginClientCommand extends ClientCommand {
     private final DataOutputStream dataOutputStream;
     private final BufferedReader bufferedReader;
-    private String newPassword;
+    private String login;
+    private String password;
 
-    public ChangePasswordClientCommand() {
+    public LoginClientCommand() {
         dataOutputStream = MainActivity.getDataOutputStream();
         bufferedReader = MainActivity.getBufferedReader();
     }
 
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override
     public String execute() {
         String answer = ClientCommand.NEGATIVE_ANSWER;
         try {
-            dataOutputStream.writeBytes(CommandsList.CHANGE_PASSWORD_COMMAND + "\n" + MainActivity.getLogin() + "\n" + MainActivity.getPassword() + "\n" + newPassword + "\n");
+            dataOutputStream.writeBytes(CommandsList.LOGIN_COMMAND + "\n" + login + "\n" + password + "\n");
             answer = bufferedReader.readLine();
         } catch (IOException e) {
             e.printStackTrace();

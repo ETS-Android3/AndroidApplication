@@ -1,16 +1,15 @@
 package ua.nure.server.commands;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 
 import ua.nure.domain.entity.Client;
-import ua.nure.server.ServerConnection;
+import ua.nure.server.application.ServerConnection;
 import ua.nure.server.exception.RepositoryException;
 
-public class GetUserServerCommand extends Command {
+public class GetUserServerCommand extends ServerCommand {
     private String login;
 
     public GetUserServerCommand() { }
@@ -28,9 +27,9 @@ public class GetUserServerCommand extends Command {
                 Gson gson = new Gson();
                 String json = gson.toJson(client);
                 System.out.println("GSON:" + json);
-                dataOutputStream.writeBytes(Command.POSITIVE_ANSWER + json + "\n");
+                dataOutputStream.writeBytes(ServerCommand.POSITIVE_ANSWER + json + "\n");
             } else {
-                dataOutputStream.writeBytes(Command.NEGATIVE_ANSWER);
+                dataOutputStream.writeBytes(ServerCommand.NEGATIVE_ANSWER);
             }
         } catch (RepositoryException | IOException e) {
             e.printStackTrace();

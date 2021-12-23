@@ -6,10 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import ua.nure.domain.entity.Client;
+import ua.nure.domain.entity.CommandsList;
 import ua.nure.myapplication.commands.ChangePasswordClientCommand;
-import ua.nure.myapplication.commands.GetUserClientCommand;
-import ua.nure.myapplication.fragments.WarningDialog;
+import ua.nure.myapplication.commands.ClientCommand;
+import ua.nure.myapplication.fragments.WarningDialogFilingTheGaps;
 import ua.nure.myapplication.fragments.WarningDialogPasswordFailed;
 import ua.nure.myapplication.fragments.WarningDialogPasswordSucceed;
 
@@ -25,24 +25,23 @@ public class SettingsActivity extends AppCompatActivity {
         EditText oldPasswordText = findViewById(R.id.oldPasswordText);
         EditText newPasswordText = findViewById(R.id.newPasswordText);
 
-        String oldPassword = oldPasswordText.getText().toString().replace(" ","");
-        String newPassword = newPasswordText.getText().toString().replace(" ", "");
+        String oldPassword = oldPasswordText.getText().toString().replace(CommandsList.GAP_STRING,CommandsList.EMPTY_STRING);
+        String newPassword = newPasswordText.getText().toString().replace(CommandsList.GAP_STRING,CommandsList.EMPTY_STRING);
 
-        if (oldPassword.equals("") || newPassword.equals("")) {
-            WarningDialog warningDialogFragment = new WarningDialog();
-            warningDialogFragment.show(getSupportFragmentManager(), "CUSTOM");
+        if (oldPassword.equals(CommandsList.EMPTY_STRING) || newPassword.equals(CommandsList.EMPTY_STRING)) {
+            MainActivity.getWarningsHelper().showFragment(this, WarningDialogFilingTheGaps.class.getName());
         } else if (!MainActivity.getPassword().equals(oldPassword))  {
-            WarningDialogPasswordFailed dialogPasswordSucceed = new WarningDialogPasswordFailed();
-            dialogPasswordSucceed.show(getSupportFragmentManager(), "CUSTOM");
+            MainActivity.getWarningsHelper().showFragment(this, WarningDialogPasswordFailed.class.getName());
         } else {
             new Thread(() -> {
                 ChangePasswordClientCommand changePasswordClientCommand = new ChangePasswordClientCommand();
                 changePasswordClientCommand.setNewPassword(newPassword);
-                changePasswordClientCommand.execute();
-                MainActivity.setPassword(newPassword);
-                WarningDialogPasswordSucceed dialogPasswordSucceed = new WarningDialogPasswordSucceed();
-                dialogPasswordSucceed.show(getSupportFragmentManager(), "CUSTOM");
-                this.finish();
+
+                if (changePasswordClientCommand.execute().equals(ClientCommand.POSITIVE_ANSWER)) {
+                    MainActivity.setPassword(newPassword);
+                    MainActivity.getWarningsHelper().showFragment(this, WarningDialogPasswordSucceed.class.getName());
+                    this.finish();
+                }
             }).start();
         }
 

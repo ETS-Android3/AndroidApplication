@@ -1,20 +1,13 @@
 package ua.nure.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
 import ua.nure.domain.entity.Client;
+import ua.nure.myapplication.commands.ClientCommand;
 import ua.nure.myapplication.commands.GetUserClientCommand;
-import ua.nure.server.commands.GetUserServerCommand;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -28,15 +21,13 @@ public class ProfileActivity extends AppCompatActivity {
         TextView userPhone = findViewById(R.id.phoneView);
 
         new Thread(() -> {
-
-                GetUserClientCommand getUserClientCommand = new GetUserClientCommand();
-                getUserClientCommand.execute();
+            GetUserClientCommand getUserClientCommand = new GetUserClientCommand();
+            if (getUserClientCommand.execute().equals(ClientCommand.POSITIVE_ANSWER)) {
                 Client client = getUserClientCommand.getClient();
-
                 userName.setText(client.getName());
                 userLogin.setText(client.getLogin());
                 userPhone.setText(client.getPhoneNumber());
-
+            }
         }).start();
     }
 

@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -13,9 +12,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-import ua.nure.myapplication.commands.ClientCommand;
-import ua.nure.myapplication.fragments.WarningDialog;
-import ua.nure.myapplication.fragments.WarningDialogNoExistingUser;
+import ua.nure.myapplication.fragments.WarningsHelper;
 import ua.nure.server.application.Server;
 
 public class MainActivity extends AppCompatActivity {
@@ -25,7 +22,12 @@ public class MainActivity extends AppCompatActivity {
     private static BufferedReader bufferedReader;
     private static String login;
     private static String password;
+    private static final WarningsHelper warningsHelper = WarningsHelper.getInstance();
 
+
+    public static WarningsHelper getWarningsHelper() {
+        return warningsHelper;
+    }
     public static String getLogin() {
         return login;
     }
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     public static BufferedReader getBufferedReader() {
         return bufferedReader;
     }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (!state) {

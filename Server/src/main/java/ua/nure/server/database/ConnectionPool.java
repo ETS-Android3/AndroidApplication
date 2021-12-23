@@ -5,14 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.sql.Types;
-import java.time.LocalDateTime;
-import java.util.stream.StreamSupport;
 
-import javax.annotation.processing.SupportedSourceVersion;
 
-import ua.nure.domain.entity.Client;
 import ua.nure.server.exception.ConnectionException;
 
 public class ConnectionPool {
@@ -23,7 +18,6 @@ public class ConnectionPool {
         try {
             for (int i = 0; i < count; i++){
                 pool[i] = new MyConnection(DriverManager.getConnection(DBUrl, DBUser, password));
-                System.out.println("Connected");
             }
         } catch (SQLException exception) {
             throw new ConnectionException(exception.getMessage());
@@ -91,10 +85,8 @@ public class ConnectionPool {
             PreparedStatement preparedStatement = connection.prepareStatement(sqlCommand);
             for (int i = 0; i < arguments.length; i++) {
                 if (arguments[i] == null) {
-                    System.out.print("null,");
                     preparedStatement.setNull(i + 1, Types.NULL);
                 } else {
-                    System.out.print(arguments[i].toString() + ",");
                     preparedStatement.setString(i + 1, arguments[i].toString());
                 }
              }

@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-public class WarningDialog extends DialogFragment {
+public class WarningDialogFilingTheGaps extends DialogFragment {
     private final String WARNING = "Все поля должны быть заполнены!";
     private final String POSITIVE_BUTTON_TEXT = "OK";
 

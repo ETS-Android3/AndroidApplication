@@ -4,10 +4,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import ua.nure.domain.entity.Client;
-import ua.nure.server.ServerConnection;
+import ua.nure.server.application.ServerConnection;
 import ua.nure.server.exception.RepositoryException;
 
-public class RegistrationServerCommand extends Command {
+public class RegistrationServerCommand extends ServerCommand {
     private String password;
     private String login;
     private String name;
@@ -38,10 +38,10 @@ public class RegistrationServerCommand extends Command {
             DataOutputStream dataOutputStream = ServerConnection.getDataOutputStream();
 
             if (client != null) {
-                dataOutputStream.writeBytes(Command.NEGATIVE_ANSWER);
+                dataOutputStream.writeBytes(ServerCommand.NEGATIVE_ANSWER);
             } else {
                 ServerConnection.getClientRepository().insert(name, login, password, phone);
-                dataOutputStream.writeBytes(Command.POSITIVE_ANSWER);
+                dataOutputStream.writeBytes(ServerCommand.POSITIVE_ANSWER);
             }
         } catch (RepositoryException | IOException e) {
             e.printStackTrace();

@@ -11,10 +11,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 
 import ua.nure.myapplication.commands.ClientCommand;
-import ua.nure.myapplication.fragments.WarningDialog;
+import ua.nure.myapplication.fragments.WarningDialogFilingTheGaps;
 import ua.nure.myapplication.fragments.WarningDialogAlreadyExistingUser;
-import ua.nure.myapplication.fragments.WarningDialogNoExistingUser;
-import ua.nure.server.commands.Command;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -36,8 +34,8 @@ public class RegistrationActivity extends AppCompatActivity {
         String phone = editPhone.getText().toString();
 
         if (email.equals("") || password.equals("") || name.equals("") || phone.equals("")) {
-            WarningDialog warningDialogFragment = new WarningDialog();
-            warningDialogFragment.show(getSupportFragmentManager(), "CUSTOM");
+            WarningDialogFilingTheGaps warningDialogFilingTheGapsFragment = new WarningDialogFilingTheGaps();
+            warningDialogFilingTheGapsFragment.show(getSupportFragmentManager(), "CUSTOM");
         } else {
             new Thread(() -> {
                 try {

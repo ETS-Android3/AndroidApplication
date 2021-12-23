@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#7379E4"
     tools:context=".MainActivity">
 
     <androidx.core.widget.NestedScrollView
@@ -24,9 +25,19 @@
                 android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="СОВРМЕННЫЕ ДВИГАТЕЛИ"
-                android:textAlignment="center"
+                android:background="#7379E4"
+                android:text="СОВРМЕННЫЕ "
+                android:textAlignment="textStart"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFD600"
+                android:text="ДВИГАТЕЛИ"
+                android:textAlignment="textEnd"
                 android:textSize="40sp"
                 android:textStyle="bold" />
 
@@ -34,16 +45,25 @@
                 android:id="@+id/imageView3"
                 android:layout_width="match_parent"
                 android:layout_height="233dp"
-                android:layout_marginBottom="20dp"
                 app:srcCompat="@mipmap/ic_banner_engine" />
 
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="Качественные технолгии"
-                android:textAlignment="center"
+                android:background="#7379E4"
+                android:text="КАЧЕСТВЕННАЯ"
+                android:textAlignment="textStart"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFD600"
+                android:text="ОБРАБОТКА"
+                android:textAlignment="textEnd"
                 android:textSize="40sp"
                 android:textStyle="bold" />
 
@@ -53,12 +73,31 @@
                 android:layout_height="236dp"
                 app:srcCompat="@mipmap/ic_banner_audi_inside" />
 
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#7379E4"
+                android:text="КАЧЕСТВЕННАЯ"
+                android:textAlignment="textStart"
+                android:textSize="35sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFD600"
+                android:text="ОБРАБОТКА"
+                android:textAlignment="textEnd"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
             <ImageView
                 android:id="@+id/imageView8"
                 android:layout_width="match_parent"
                 android:layout_height="236dp"
                 app:srcCompat="@mipmap/ic_banner_audi_light_foreground" />
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

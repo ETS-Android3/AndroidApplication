@@ -7,7 +7,6 @@ import java.util.List;
 
 import ua.nure.domain.entity.Entity;
 import ua.nure.server.database.ConnectionPool;
-import ua.nure.server.exception.RepositoryException;
 
 public abstract class Repository <T extends Entity> implements IRepository<T> {
     protected final ConnectionPool.MyConnection myConnection;
