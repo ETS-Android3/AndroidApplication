@@ -15,6 +15,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        MainActivity.setConnectedState(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
@@ -28,28 +29,25 @@ public class LoginActivity extends AppCompatActivity {
         if (email.equals(CommandsList.EMPTY_STRING) || password.equals(CommandsList.EMPTY_STRING)) {
             MainActivity.getWarningsHelper().showFragment(this, WarningDialogFilingTheGaps.class.getName());
         } else  {
-            new Thread(() -> {
-                LoginClientCommand loginClientCommand = new LoginClientCommand();
-                loginClientCommand.setLogin(email);
-                loginClientCommand.setPassword(password);
 
-                if (loginClientCommand.execute().equals(ClientCommand.NEGATIVE_ANSWER)) {
+            new Thread(() -> {
+                ClientCommand command = MainActivity.getClientCommandsHolder().getCommand(LoginClientCommand.class.getName());
+
+                if (((LoginClientCommand)command).setLogin(email).setPassword(password).execute().equals(ClientCommand.NEGATIVE_ANSWER)) {
                     MainActivity.getWarningsHelper().showFragment(this, WarningDialogNoExistingUser.class.getName());
                 } else {
-                    MainActivity.setState(true);
+                    MainActivity.setViewableState(true);
                     MainActivity.setPassword(password);
                     MainActivity.setLogin(email);
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    this.finish();
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    finish();
                 }
             }).start();
+
         }
     }
 
     public void registrationButtonOnClick(View view) {
-        Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(LoginActivity.this, RegistrationActivity.class));
     }
 }

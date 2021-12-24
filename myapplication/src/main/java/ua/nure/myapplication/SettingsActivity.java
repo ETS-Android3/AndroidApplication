@@ -34,10 +34,8 @@ public class SettingsActivity extends AppCompatActivity {
             MainActivity.getWarningsHelper().showFragment(this, WarningDialogPasswordFailed.class.getName());
         } else {
             new Thread(() -> {
-                ChangePasswordClientCommand changePasswordClientCommand = new ChangePasswordClientCommand();
-                changePasswordClientCommand.setNewPassword(newPassword);
-
-                if (changePasswordClientCommand.execute().equals(ClientCommand.POSITIVE_ANSWER)) {
+                ClientCommand command = MainActivity.getClientCommandsHolder().getCommand(ChangePasswordClientCommand.class.getName());
+                if (((ChangePasswordClientCommand)command).setNewPassword(newPassword).execute().equals(ClientCommand.POSITIVE_ANSWER)) {
                     MainActivity.setPassword(newPassword);
                     MainActivity.getWarningsHelper().showFragment(this, WarningDialogPasswordSucceed.class.getName());
                     this.finish();

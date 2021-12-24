@@ -18,8 +18,9 @@ public class ChangePasswordClientCommand extends ClientCommand {
         bufferedReader = MainActivity.getBufferedReader();
     }
 
-    public void setNewPassword(String newPassword) {
+    public ChangePasswordClientCommand setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+        return this;
     }
 
     @Override

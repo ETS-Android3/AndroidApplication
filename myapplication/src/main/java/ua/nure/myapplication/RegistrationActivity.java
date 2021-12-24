@@ -1,16 +1,14 @@
 package ua.nure.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
+import ua.nure.domain.entity.Client;
+import ua.nure.domain.entity.CommandsList;
 import ua.nure.myapplication.commands.ClientCommand;
+import ua.nure.myapplication.commands.RegistrationClientCommand;
 import ua.nure.myapplication.fragments.WarningDialogFilingTheGaps;
 import ua.nure.myapplication.fragments.WarningDialogAlreadyExistingUser;
 
@@ -29,35 +27,29 @@ public class RegistrationActivity extends AppCompatActivity {
         EditText editPhone = findViewById(R.id.phoneField);
 
         String name = editName.getText().toString();
-        String email = editEmail.getText().toString();
-        String password = editPassword.getText().toString();
-        String phone = editPhone.getText().toString();
+        String email = editEmail.getText().toString().replace(CommandsList.GAP_STRING, CommandsList.EMPTY_STRING);
+        String password = editPassword.getText().toString().replace(CommandsList.GAP_STRING, CommandsList.EMPTY_STRING);
+        String phone = editPhone.getText().toString().replace(CommandsList.GAP_STRING, CommandsList.EMPTY_STRING);
 
-        if (email.equals("") || password.equals("") || name.equals("") || phone.equals("")) {
-            WarningDialogFilingTheGaps warningDialogFilingTheGapsFragment = new WarningDialogFilingTheGaps();
-            warningDialogFilingTheGapsFragment.show(getSupportFragmentManager(), "CUSTOM");
+        if (email.equals(CommandsList.EMPTY_STRING) || password.equals(CommandsList.EMPTY_STRING)  || name.equals(CommandsList.EMPTY_STRING)  || phone.equals(CommandsList.EMPTY_STRING) ) {
+            MainActivity.getWarningsHelper().showFragment(this, WarningDialogFilingTheGaps.class.getName());
         } else {
             new Thread(() -> {
-                try {
-                    DataOutputStream dataOutputStream = MainActivity.getDataOutputStream();
-                    BufferedReader bufferedReader = MainActivity.getBufferedReader();
-                    dataOutputStream.writeBytes("REGISTRATION\n" +
-                            email + "\n" +
-                            password + "\n" +
-                            name + "\n" +
-                            phone + "\n"); // fix Login
-                    if (bufferedReader.readLine().equals(ClientCommand.NEGATIVE_ANSWER)) {
-                        WarningDialogAlreadyExistingUser warningDialogAlreadyExistingUser = new WarningDialogAlreadyExistingUser();
-                        warningDialogAlreadyExistingUser.show(getSupportFragmentManager(), "CUSTOM");
-                        editEmail.setText("");
-                        editName.setText("");
-                        editPassword.setText("");
-                        editPhone.setText("");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                ClientCommand command = MainActivity.getClientCommandsHolder().getCommand(RegistrationClientCommand.class.getName());
+                ((RegistrationClientCommand)command).setClient(new Client(0, email, name, password, phone));
+                if (((RegistrationClientCommand)command).execute().equals(ClientCommand.NEGATIVE_ANSWER)) {
+                    MainActivity.getWarningsHelper().showFragment(this, WarningDialogAlreadyExistingUser.class.getName());
+                    editEmail.setText(CommandsList.EMPTY_STRING);
+                } else {
+                    MainActivity.setViewableState(true);
+                    MainActivity.setPassword(password);
+                    MainActivity.setLogin(email);
+
+                    startActivity(new Intent(RegistrationActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    finish();
                 }
             }).start();
+
         }
     }
 }

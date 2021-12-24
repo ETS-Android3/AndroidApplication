@@ -1,46 +1,36 @@
 package ua.nure.server.commands;
 
+import com.google.gson.Gson;
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import json.JsonHelper;
+import oracle.ons.Cli;
 import ua.nure.domain.entity.Client;
+import ua.nure.server.application.Server;
 import ua.nure.server.application.ServerConnection;
 import ua.nure.server.exception.RepositoryException;
 
 public class RegistrationServerCommand extends ServerCommand {
-    private String password;
-    private String login;
-    private String name;
-    private String phone;
+    private Client mainClient;
 
     public RegistrationServerCommand() {}
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setClient(String jsonClient) {
+        mainClient = JsonHelper.parseJsonIntoClient(jsonClient);
     }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
     @Override
     public void execute() {
         try {
-            Client client = ServerConnection.getClientRepository().getByLogin(login);
+            Client client = ServerConnection.getClientRepository().getByLogin(mainClient.getLogin());
             DataOutputStream dataOutputStream = ServerConnection.getDataOutputStream();
 
             if (client != null) {
                 dataOutputStream.writeBytes(ServerCommand.NEGATIVE_ANSWER);
             } else {
-                ServerConnection.getClientRepository().insert(name, login, password, phone);
+                assert false;
+                ServerConnection.getClientRepository().insert(mainClient);
                 dataOutputStream.writeBytes(ServerCommand.POSITIVE_ANSWER);
             }
         } catch (RepositoryException | IOException e) {

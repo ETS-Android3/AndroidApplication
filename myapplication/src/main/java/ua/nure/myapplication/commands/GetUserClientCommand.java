@@ -1,11 +1,9 @@
 package ua.nure.myapplication.commands;
 
-import com.google.gson.Gson;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
+import json.JsonHelper;
 import ua.nure.domain.entity.Client;
 import ua.nure.domain.entity.CommandsList;
 import ua.nure.myapplication.MainActivity;
@@ -31,8 +29,7 @@ public class GetUserClientCommand extends ClientCommand {
             dataOutputStream.writeBytes(CommandsList.GET_USER_COMMAND +"\n" + MainActivity.getLogin() + "\n");
             answer = bufferedReader.readLine();
             if (answer.equals(ClientCommand.POSITIVE_ANSWER)){
-                Gson gson = new Gson();
-                client = gson.fromJson(bufferedReader.readLine(), Client.class);
+                client = JsonHelper.parseJsonIntoClient(bufferedReader.readLine());
             }
         } catch (IOException e) {
             e.printStackTrace();

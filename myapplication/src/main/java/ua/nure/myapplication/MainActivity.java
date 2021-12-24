@@ -12,19 +12,32 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import ua.nure.myapplication.commands.ClientCommandService;
 import ua.nure.myapplication.fragments.WarningsHelper;
 import ua.nure.server.application.Server;
 
 public class MainActivity extends AppCompatActivity {
-    private static Boolean state = false;
+    private static Boolean connectedState = false;
+    private static Boolean viewableState = false;
     private Socket socket = null;
     private static DataOutputStream dataOutputStream;
     private static BufferedReader bufferedReader;
     private static String login;
     private static String password;
     private static final WarningsHelper warningsHelper = WarningsHelper.getInstance();
+    private static ClientCommandService clientCommandsHolder;
 
+    public static void setViewableState(Boolean state) {
+        viewableState = state;
+    }
 
+    public static void setConnectedState(Boolean state) {
+        connectedState = state;
+    }
+
+    public static ClientCommandService getClientCommandsHolder() {
+        return clientCommandsHolder;
+    }
     public static WarningsHelper getWarningsHelper() {
         return warningsHelper;
     }
@@ -40,9 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public static void setPassword(String otherPassword) {
         password = otherPassword;
     }
-    public static void setState(Boolean sstate) {
-        state = sstate;
-    }
+
     public static DataOutputStream getDataOutputStream() {
         return dataOutputStream;
     }
@@ -53,61 +64,31 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (!state) {
+        super.onCreate(savedInstanceState);
+        if (!connectedState) {
             new Thread(() -> {
                 try {
                     socket = new Socket(Server.IP, Server.PORT);
                     dataOutputStream = new DataOutputStream(socket.getOutputStream());
                     bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                    clientCommandsHolder = ClientCommandService.getInstance();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }).start();
+        }
+        if(!viewableState) {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            finish();
+        }
+        else {
+            setContentView(R.layout.activity_main);
+        }
 
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            this.finish();
-        }
-        else{
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-        }
+
     }
 
     public void profileButtonOnClick(View view) {
-        Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
     }
-
-    /*public void confirmButtonOnClick(View view) {
-        EditText email = findViewById(R.id.emailField);
-        EditText password = findViewById(R.id.passwordField);
-
-        if (email.getText().toString().equals("") || password.getText().toString().equals("")) {
-            WarningDialog warningDialogFragment = new WarningDialog();
-            warningDialogFragment.show(getSupportFragmentManager(), "CUSTOM");
-            // fix " "
-        } else  {
-            new Thread(() -> {
-                try {
-                    dataOutputStream.writeBytes("LOGIN\n" +
-                            email.getText().toString() + "\n" +
-                            password.getText().toString() + "\n"); // fix Login
-
-                    if (bufferedReader.readLine().equals(ClientCommand.NEGATIVE_ANSWER)) {
-                        WarningDialogNoExistingUser warningDialogNoExistingUser = new WarningDialogNoExistingUser();
-                        warningDialogNoExistingUser.show(getSupportFragmentManager(), "CUSTOM");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }).start();
-
-        }
-    }*/
-
-
 }

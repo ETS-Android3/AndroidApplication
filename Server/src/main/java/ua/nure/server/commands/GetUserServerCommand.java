@@ -26,7 +26,6 @@ public class GetUserServerCommand extends ServerCommand {
             if (client != null) {
                 Gson gson = new Gson();
                 String json = gson.toJson(client);
-                System.out.println("GSON:" + json);
                 dataOutputStream.writeBytes(ServerCommand.POSITIVE_ANSWER + json + "\n");
             } else {
                 dataOutputStream.writeBytes(ServerCommand.NEGATIVE_ANSWER);

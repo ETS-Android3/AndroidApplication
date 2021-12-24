@@ -14,6 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import json.JsonHelper;
 import ua.nure.server.commands.ChangePasswordServerCommand;
 import ua.nure.server.commands.ServerCommand;
 import ua.nure.server.commands.GetUserServerCommand;
@@ -37,7 +38,7 @@ public class Server {
         String dbUrl = resource.getString("db.url");
         String dbUser = resource.getString("db.user");
         String password = resource.getString("db.password");
-        String poolsCount = resource.getString("dc.count");
+        String poolsCount = resource.getString("db.count");
         try {
             connectionPool = new ConnectionPool(dbUrl, dbUser, password, Integer.parseInt(poolsCount));
         } catch (ConnectionException throwable) {

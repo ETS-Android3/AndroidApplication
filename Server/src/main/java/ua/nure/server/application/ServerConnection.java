@@ -61,10 +61,7 @@ public class ServerConnection extends Thread {
                     case CommandsList.REGISTRATION_COMMAND:
                         System.out.println("[" + getConnectionName() + "]:" + "REGISTRATION CASE STARTED");
                         command = Server.getCommand(RegistrationServerCommand.class.getName());
-                        ((RegistrationServerCommand)command).setLogin(bufferedReader.readLine());
-                        ((RegistrationServerCommand)command).setPassword(bufferedReader.readLine());
-                        ((RegistrationServerCommand)command).setName(bufferedReader.readLine());
-                        ((RegistrationServerCommand)command).setPhone(bufferedReader.readLine());
+                        ((RegistrationServerCommand)command).setClient(bufferedReader.readLine());
                         command.execute();
                         System.out.println("[" + getConnectionName() + "]:" + "REGISTRATION CASE FINISHED");
                         break;

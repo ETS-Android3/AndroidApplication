@@ -34,8 +34,8 @@ public class ClientRepository extends Repository<Client> {
         }
     }
 
-    public void insert(String name, String login, String pass, String phone) throws RepositoryException {
-        try (ResultSet resultSet = myConnection.executeQuery(INSERT_INTO, 4, name, login, pass, phone)) {
+    public void insert(Client client) throws RepositoryException {
+        try (ResultSet resultSet = myConnection.executeQuery(INSERT_INTO, 12, client.getName(), client.getLogin(), client.getPassword(), client.getPhoneNumber())) {
         } catch (SQLException exception) {
             throw new RepositoryException(exception.getMessage());
         }

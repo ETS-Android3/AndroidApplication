@@ -10,7 +10,7 @@ public class WarningsHelper {
     private final Map<String, DialogFragment> warningsFragments = new HashMap<>();
 
     private WarningsHelper() {
-        warningsFragments.put(WarningDialogNoExistingUser.class.getName(), new WarningDialogAlreadyExistingUser());
+        warningsFragments.put(WarningDialogAlreadyExistingUser.class.getName(), new WarningDialogAlreadyExistingUser());
         warningsFragments.put(WarningDialogNoExistingUser.class.getName(), new WarningDialogNoExistingUser());
         warningsFragments.put(WarningDialogPasswordFailed.class.getName(), new WarningDialogPasswordFailed());
         warningsFragments.put(WarningDialogPasswordSucceed.class.getName(), new WarningDialogPasswordSucceed());

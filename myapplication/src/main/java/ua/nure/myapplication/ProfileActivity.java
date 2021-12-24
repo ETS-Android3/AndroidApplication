@@ -21,9 +21,9 @@ public class ProfileActivity extends AppCompatActivity {
         TextView userPhone = findViewById(R.id.phoneView);
 
         new Thread(() -> {
-            GetUserClientCommand getUserClientCommand = new GetUserClientCommand();
-            if (getUserClientCommand.execute().equals(ClientCommand.POSITIVE_ANSWER)) {
-                Client client = getUserClientCommand.getClient();
+            ClientCommand command = MainActivity.getClientCommandsHolder().getCommand(GetUserClientCommand.class.getName());
+            if (((GetUserClientCommand)command).execute().equals(ClientCommand.POSITIVE_ANSWER)) {
+                Client client = ((GetUserClientCommand)command).getClient();
                 userName.setText(client.getName());
                 userLogin.setText(client.getLogin());
                 userPhone.setText(client.getPhoneNumber());
@@ -32,7 +32,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void settingsButtonOnClick(View view) {
-        Intent intent = new Intent(ProfileActivity.this, SettingsActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(ProfileActivity.this, SettingsActivity.class));
     }
 }

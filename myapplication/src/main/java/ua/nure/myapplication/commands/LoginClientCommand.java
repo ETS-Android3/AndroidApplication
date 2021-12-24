@@ -19,12 +19,14 @@ public class LoginClientCommand extends ClientCommand {
         bufferedReader = MainActivity.getBufferedReader();
     }
 
-    public void setLogin(String login) {
+    public LoginClientCommand setLogin(String login) {
         this.login = login;
+        return this;
     }
 
-    public void setPassword(String password) {
+    public LoginClientCommand setPassword(String password) {
         this.password = password;
+        return this;
     }
 
     @Override
