@@ -5,8 +5,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import json.JsonHelper;
 import ua.nure.domain.entity.Client;
-import ua.nure.domain.entity.CommandsList;
 import ua.nure.myapplication.MainActivity;
+import utility.CommandsList;
 
 public class GetUserClientCommand extends ClientCommand {
     private final DataOutputStream dataOutputStream;

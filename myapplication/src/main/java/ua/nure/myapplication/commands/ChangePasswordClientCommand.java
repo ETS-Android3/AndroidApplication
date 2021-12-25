@@ -5,8 +5,8 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import ua.nure.domain.entity.CommandsList;
 import ua.nure.myapplication.MainActivity;
+import utility.CommandsList;
 
 public class ChangePasswordClientCommand extends ClientCommand {
     private final DataOutputStream dataOutputStream;

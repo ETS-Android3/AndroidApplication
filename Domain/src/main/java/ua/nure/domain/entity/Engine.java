@@ -3,19 +3,19 @@ package ua.nure.domain.entity;
 import java.util.Objects;
 
 public class Engine extends Entity {
-    Integer volume;
-    String model;
-    String brand;
-    String type;
-    String code;
+    private Integer volume;
+    private String model;
+    private String brand;
+    private String type;
+    private String vCode;
 
-    public Engine(Integer identifier, Integer volume, String model, String brand, String type, String code) {
-        super(identifier);
-        this.volume = volume;
-        this.brand = brand;
-        this.type = type;
-        this.code = code;
-        this.model = model;
+    private Engine(EngineBuilder engineBuilder) {
+        super(engineBuilder.getIdentifier());
+        setVolume(engineBuilder.getVolume());
+        setModel(engineBuilder.getModel());
+        setBrand(engineBuilder.getBrand());
+        setType(engineBuilder.getType());
+        setVCode(engineBuilder.getVCode());
     }
 
     public Integer getVolume() {
@@ -42,12 +42,12 @@ public class Engine extends Entity {
         this.type = type;
     }
 
-    public String getCode() {
-        return code;
+    public String getVCode() {
+        return vCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setVCode(String vCode) {
+        this.vCode = vCode;
     }
 
     public String getModel() {
@@ -65,7 +65,7 @@ public class Engine extends Entity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), volume, model, brand, type, code);
+        return Objects.hash(super.hashCode(), volume, model, brand, type, vCode);
     }
 
     @Override
@@ -76,7 +76,76 @@ public class Engine extends Entity {
                 ", model='" + model + '\'' +
                 ", brand='" + brand + '\'' +
                 ", type='" + type + '\'' +
-                ", code='" + code + '\'' +
+                ", code='" + vCode + '\'' +
                 '}';
+    }
+
+    public static class EngineBuilder {
+        private Integer identifier;
+        private Integer volume;
+        private String model;
+        private String brand;
+        private String type;
+        private String vCode;
+
+        public EngineBuilder() {}
+
+        public Engine build(){
+            return new Engine(this);
+        }
+
+        public Integer getIdentifier() {
+            return identifier;
+        }
+
+        public Integer getVolume() {
+            return volume;
+        }
+
+        public String getModel() {
+            return model;
+        }
+
+        public String getBrand() {
+            return brand;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public String getVCode() {
+            return vCode;
+        }
+
+        public EngineBuilder setIdentifier(Integer identifier) {
+            this.identifier = identifier;
+            return this;
+        }
+
+        public EngineBuilder setVolume(Integer volume) {
+            this.volume = volume;
+            return this;
+        }
+
+        public EngineBuilder setModel(String model) {
+            this.model = model;
+            return this;
+        }
+
+        public EngineBuilder setBrand(String brand) {
+            this.brand = brand;
+            return this;
+        }
+
+        public EngineBuilder setType(String type) {
+            this.type = type;
+            return this;
+        }
+
+        public EngineBuilder setVCode(String vCode) {
+            this.vCode = vCode;
+            return this;
+        }
     }
 }

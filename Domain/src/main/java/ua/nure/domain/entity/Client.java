@@ -3,10 +3,10 @@ package ua.nure.domain.entity;
 import java.util.Objects;
 
 public class Client extends Entity {
-    String phoneNumber;
-    String password;
-    String login;
-    String name;
+    private String phoneNumber;
+    private String password;
+    private String login;
+    private String name;
 
     public Client(Integer identifier, String login, String name, String password, String phoneNumber) {
         super(identifier);

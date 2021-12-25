@@ -4,9 +4,9 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Contract extends Entity {
-    Integer carSerialNumber;
-    String clientEmail;
-    Date date;
+    private Integer carSerialNumber;
+    private String clientEmail;
+    private Date date;
 
     public Contract(Integer identifier, Integer carSerialNumber, String clientEmail, Date date) {
         super(identifier);

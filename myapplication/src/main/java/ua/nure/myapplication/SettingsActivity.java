@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import ua.nure.domain.entity.CommandsList;
 import ua.nure.myapplication.commands.ChangePasswordClientCommand;
 import ua.nure.myapplication.commands.ClientCommand;
 import ua.nure.myapplication.fragments.WarningDialogFilingTheGaps;
 import ua.nure.myapplication.fragments.WarningDialogPasswordFailed;
 import ua.nure.myapplication.fragments.WarningDialogPasswordSucceed;
+import utility.CommandsList;
 
 public class SettingsActivity extends AppCompatActivity {
 

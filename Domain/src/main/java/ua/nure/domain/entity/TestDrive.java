@@ -3,9 +3,9 @@ package ua.nure.domain.entity;
 import java.util.Objects;
 
 public class TestDrive extends Entity {
-    Integer carSerialNumber;
-    String clientEmail;
-    Integer score;
+    private Integer carSerialNumber;
+    private String clientEmail;
+    private Integer score;
 
     public TestDrive(Integer identifier, Integer carSerialNumber, String clientEmail, Integer score) {
         super(identifier);

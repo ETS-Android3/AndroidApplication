@@ -8,13 +8,13 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Locale;
 
-import ua.nure.domain.entity.CommandsList;
 import ua.nure.server.commands.ChangePasswordServerCommand;
 import ua.nure.server.commands.ServerCommand;
 import ua.nure.server.commands.GetUserServerCommand;
 import ua.nure.server.commands.LoginServerCommand;
 import ua.nure.server.commands.RegistrationServerCommand;
 import ua.nure.server.database.repository.ClientRepository;
+import utility.CommandsList;
 
 public class ServerConnection extends Thread {
     private volatile Boolean isDisconnected = false;

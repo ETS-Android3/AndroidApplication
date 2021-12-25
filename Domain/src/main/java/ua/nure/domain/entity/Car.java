@@ -1,39 +1,45 @@
 package ua.nure.domain.entity;
 
-import java.util.Date;
 import java.util.Objects;
 
 public class Car extends Entity {
-    String manufacturerCountry;
-    Integer serialNumber;
-    Date manufactureDate;
-    String engineModel;
-    String bodyModel;
-    String photoPath;
-    String carLine;
-    String brand;
-    Long price;
+    private Engine engine;
+    private CarBody body;
+    private String manufacturerCountry;
+    private Integer serialNumber;
+    private String manufactureDate;
+    private String photoPath;
+    private String carLine;
+    private String brand;
+    private Long price;
 
-    public Car(Integer identifier,
-               Integer serialNumber,
-               String manufacturerCountry,
-               Date manufactureDate,
-               String engineModel,
-               String bodyModel,
-               String photoPath,
-               String carLine,
-               String brand,
-               Long price) {
-        super(identifier);
-        this.manufacturerCountry = manufacturerCountry;
-        this.serialNumber = serialNumber;
-        this.manufactureDate = manufactureDate;
-        this.engineModel = engineModel;
-        this.bodyModel = bodyModel;
-        this.photoPath = photoPath;
-        this.carLine = carLine;
-        this.brand = brand;
-        this.price = price;
+    private Car(CarBuilder carBuilder) {
+        super(carBuilder.getIdentifier());
+        setEngine(carBuilder.getEngine());
+        setBody(carBuilder.getBody());
+        setManufacturerCountry(carBuilder.getManufacturerCountry());
+        setSerialNumber(carBuilder.getSerialNumber());
+        setManufactureDate(carBuilder.getManufactureDate());
+        setPhotoPath(carBuilder.getPhotoPath());
+        setCarLine(carBuilder.getCarLine());
+        setBrand(carBuilder.getBrand());
+        setPrice(carBuilder.getPrice());
+    }
+
+    public Engine getEngine() {
+        return engine;
+    }
+
+    public void setEngine(Engine engine) {
+        this.engine = engine;
+    }
+
+    public CarBody getBody() {
+        return body;
+    }
+
+    public void setBody(CarBody body) {
+        this.body = body;
     }
 
     public String getManufacturerCountry() {
@@ -52,28 +58,12 @@ public class Car extends Entity {
         this.serialNumber = serialNumber;
     }
 
-    public Date getManufactureDate() {
+    public String getManufactureDate() {
         return manufactureDate;
     }
 
-    public void setManufactureDate(Date manufactureDate) {
+    public void setManufactureDate(String manufactureDate) {
         this.manufactureDate = manufactureDate;
-    }
-
-    public String getEngineModel() {
-        return engineModel;
-    }
-
-    public void setEngineModel(String engineModel) {
-        this.engineModel = engineModel;
-    }
-
-    public String getBodyModel() {
-        return bodyModel;
-    }
-
-    public void setBodyModel(String bodyModel) {
-        this.bodyModel = bodyModel;
     }
 
     public String getPhotoPath() {
@@ -110,12 +100,12 @@ public class Car extends Entity {
 
     @Override
     public boolean equals(Object object) {
-        return object instanceof Car && ((Car) object).getIdentifier().equals(getIdentifier());
+        return object instanceof Car && ((Car) object).getSerialNumber().equals(serialNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), manufacturerCountry, serialNumber, manufactureDate, engineModel, bodyModel, photoPath, carLine, brand, price);
+        return Objects.hash(super.hashCode(), manufacturerCountry, serialNumber, manufactureDate, photoPath, carLine, brand, price);
     }
 
     @Override
@@ -124,13 +114,122 @@ public class Car extends Entity {
                 "identifier=" + getIdentifier() +
                 ", manufacturerCountry='" + manufacturerCountry + '\'' +
                 ", manufactureDate=" + manufactureDate +
-                ", engineModel='" + engineModel + '\'' +
-                ", bodyModel='" + bodyModel + '\'' +
                 ", photoPath='" + photoPath + '\'' +
                 ", carLine='" + carLine + '\'' +
                 ", brand='" + brand + '\'' +
                 ", price=" + price +
                 ", serialNumber=" + serialNumber +
+                ", engine=" + engine + "\n" +
+                ", bodyType=" + body + "\n" +
                 '}';
+    }
+
+    public static class CarBuilder {
+        private Engine engine;
+        private CarBody body;
+        private Integer identifier;
+        private String manufacturerCountry;
+        private Integer serialNumber;
+        private String manufactureDate;
+        private String photoPath;
+        private String carLine;
+        private String brand;
+        private Long price;
+
+        public CarBuilder() { }
+
+        public Car build() {
+            return new Car(this);
+        }
+
+        public Engine getEngine() {
+            return engine;
+        }
+
+        public CarBuilder setEngine(Engine engine) {
+            this.engine = engine;
+            return this;
+        }
+
+        public CarBody getBody() {
+            return body;
+        }
+
+        public CarBuilder setBody(CarBody body) {
+            this.body = body;
+            return this;
+        }
+
+        public Integer getIdentifier() {
+            return identifier;
+        }
+
+        public CarBuilder setIdentifier(Integer identifier) {
+            this.identifier = identifier;
+            return this;
+        }
+
+        public String getManufacturerCountry() {
+            return manufacturerCountry;
+        }
+
+        public CarBuilder setManufacturerCountry(String manufacturerCountry) {
+            this.manufacturerCountry = manufacturerCountry;
+            return this;
+        }
+
+        public Integer getSerialNumber() {
+            return serialNumber;
+        }
+
+        public CarBuilder setSerialNumber(Integer serialNumber) {
+            this.serialNumber = serialNumber;
+            return this;
+        }
+
+        public String getManufactureDate() {
+            return manufactureDate;
+        }
+
+        public CarBuilder setManufactureDate(String manufactureDate) {
+            this.manufactureDate = manufactureDate;
+            return this;
+        }
+
+        public String getPhotoPath() {
+            return photoPath;
+        }
+
+        public CarBuilder setPhotoPath(String photoPath) {
+            this.photoPath = photoPath;
+            return this;
+        }
+
+        public String getCarLine() {
+            return carLine;
+        }
+
+        public CarBuilder setCarLine(String carLine) {
+            this.carLine = carLine;
+            return this;
+        }
+
+        public String getBrand() {
+            return brand;
+        }
+
+        public CarBuilder setBrand(String brand) {
+            this.brand = brand;
+            return this;
+        }
+
+        public Long getPrice() {
+            return price;
+        }
+
+        public CarBuilder setPrice(Long price) {
+            this.price = price;
+            return this;
+        }
     }
 }

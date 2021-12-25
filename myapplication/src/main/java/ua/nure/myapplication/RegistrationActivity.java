@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import ua.nure.domain.entity.Client;
-import ua.nure.domain.entity.CommandsList;
 import ua.nure.myapplication.commands.ClientCommand;
 import ua.nure.myapplication.commands.RegistrationClientCommand;
 import ua.nure.myapplication.fragments.WarningDialogFilingTheGaps;
 import ua.nure.myapplication.fragments.WarningDialogAlreadyExistingUser;
+import utility.CommandsList;
 
 public class RegistrationActivity extends AppCompatActivity {
 

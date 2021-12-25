@@ -5,11 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import ua.nure.domain.entity.CommandsList;
 import ua.nure.myapplication.commands.ClientCommand;
 import ua.nure.myapplication.commands.LoginClientCommand;
 import ua.nure.myapplication.fragments.WarningDialogFilingTheGaps;
 import ua.nure.myapplication.fragments.WarningDialogNoExistingUser;
+import utility.CommandsList;
 
 public class LoginActivity extends AppCompatActivity {
 
