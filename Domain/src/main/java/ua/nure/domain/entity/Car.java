@@ -113,7 +113,7 @@ public class Car extends Entity {
         return "Car{" +
                 "identifier=" + getIdentifier() +
                 ", manufacturerCountry='" + manufacturerCountry + '\'' +
-                ", manufactureDate=" + manufactureDate +
+                ", manufactureDate='" + manufactureDate + '\'' +
                 ", photoPath='" + photoPath + '\'' +
                 ", carLine='" + carLine + '\'' +
                 ", brand='" + brand + '\'' +

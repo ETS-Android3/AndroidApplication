@@ -10,7 +10,7 @@ import ua.nure.server.exception.ConnectionException;
 import ua.nure.server.exception.RepositoryException;
 
 public class ClientRepository extends Repository<Client> implements IRepository<Client> {
-    private static final String INSERT_INTO = "INSERT INTO CLIENT(ID, CNAME, LOGIN, PASS, PHONE_NUMBER) VALUES (?,?,?,?,?)";
+    private static final String INSERT_INTO = "INSERT INTO CLIENT(ID, CNAME, LOGIN, PASS, PHONE_NUMBER) VALUES (CLIENT_SQNC.NEXTVAL,?,?,?,?)";
     private static final String UPDATE = "UPDATE CLIENT SET PASS=? WHERE ID=?";
     private static final String SELECT_BY_LOGIN = "SELECT * FROM CLIENT WHERE LOGIN=?";
     private static final String SELECT_ALL = "SELECT * FROM CLIENT";
@@ -29,14 +29,14 @@ public class ClientRepository extends Repository<Client> implements IRepository<
     }
 
     public void update(Client client) throws RepositoryException {
-        try (ResultSet resultSet = myConnection.executeQuery(UPDATE, client.getPassword(), client.getIdentifier())) {
+        try (ResultSet ignored = myConnection.executeQuery(UPDATE, client.getPassword(), client.getIdentifier())) {
         } catch (SQLException | ConnectionException exception) {
             throw new RepositoryException(exception.getMessage());
         }
     }
 
     public void insert(Client client) throws RepositoryException {
-        try (ResultSet resultSet = myConnection.executeQuery(INSERT_INTO, 12, client.getName(), client.getLogin(), client.getPassword(), client.getPhoneNumber())) {
+        try (ResultSet ignored = myConnection.executeQuery(INSERT_INTO, client.getName(), client.getLogin(), client.getPassword(), client.getPhoneNumber())) {
         } catch (SQLException | ConnectionException exception) {
             throw new RepositoryException(exception.getMessage());
         }
@@ -60,8 +60,7 @@ public class ClientRepository extends Repository<Client> implements IRepository<
     @Override
     public Client getById(Integer id) throws RepositoryException {
         try (ResultSet resultSet = myConnection.executeQuery(SELECT_BY_ID, id)) {
-            resultSet.next();
-            return toEntity(resultSet);
+            return toEntityOrNull(resultSet);
         } catch (SQLException | ConnectionException exception) {
             throw new RepositoryException(exception.getMessage());
         }

@@ -3,8 +3,6 @@ package ua.nure.server.database.repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
-
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import ua.nure.domain.entity.Car;
 import ua.nure.domain.entity.CarBody;
 import ua.nure.domain.entity.Engine;
@@ -38,7 +36,7 @@ public class CarRepository extends Repository<Car> implements IRepository<Car> {
             "CAR_BODY_TYPE.NUMB_VIN_CODE AS \"CAR_BODY_TYPE_NUMB_VIN_CODE\", " +
             "CAR_BODY_TYPE.PURPOSE AS \"CAR_BODY_TYPE_PURPOSE\" " +
             "FROM ENGINE,CAR,CAR_BODY,CAR_BODY_TYPE " +
-            "WHERE ENGINE.ID = CAR.ID_ENGINE_MODEL AND CAR_BODY.ID_BODY_TYPE = CAR_BODY_TYPE.ID");
+            "WHERE ENGINE.ID = CAR.ID_ENGINE_MODEL AND CAR_BODY.ID_BODY_TYPE = CAR_BODY_TYPE.ID AND CAR.ID_BODY_MODEL=CAR_BODY.ID");
 
     public CarRepository(ConnectionPool.MyConnection myConnection) {
         super(myConnection);
@@ -54,8 +52,12 @@ public class CarRepository extends Repository<Car> implements IRepository<Car> {
     }
 
     @Override
-    public Car getById(Integer id) {
-        throw new NotImplementedException();
+    public Car getById(Integer id) throws RepositoryException {
+        try (ResultSet resultSet = myConnection.executeQuery(SELECT_ALL_CARS.append("\tAND CAR.SERIAL_NUMBER = ").append(id).toString())) {
+            return toEntityOrNull(resultSet);
+        } catch (SQLException | ConnectionException exception) {
+            throw new RepositoryException(exception.getMessage());
+        }
     }
 
     @Override

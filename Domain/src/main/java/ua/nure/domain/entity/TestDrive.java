@@ -4,14 +4,14 @@ import java.util.Objects;
 
 public class TestDrive extends Entity {
     private Integer carSerialNumber;
-    private String clientEmail;
+    private Integer clientIdentifier;
     private Integer score;
 
-    public TestDrive(Integer identifier, Integer carSerialNumber, String clientEmail, Integer score) {
-        super(identifier);
-        this.carSerialNumber = carSerialNumber;
-        this.clientEmail = clientEmail;
-        this.score = score;
+    private TestDrive(TestDriveBuilder testDriveBuilder) {
+        super(testDriveBuilder.getIdentifier());
+        setClientIdentifier(testDriveBuilder.getClientIdentifier());
+        setCarSerialNumber(testDriveBuilder.getCarSerialNumber());
+        setScore(testDriveBuilder.getScore());
     }
 
     public Integer getCarSerialNumber() {
@@ -22,12 +22,12 @@ public class TestDrive extends Entity {
         this.carSerialNumber = carSerialNumber;
     }
 
-    public String getClientEmail() {
-        return clientEmail;
+    public Integer getClientIdentifier() {
+        return clientIdentifier;
     }
 
-    public void setClientEmail(String clientEmail) {
-        this.clientEmail = clientEmail;
+    public void setClientIdentifier(Integer clientIdentifier) {
+        this.clientIdentifier = clientIdentifier;
     }
 
     public Integer getScore() {
@@ -45,16 +45,65 @@ public class TestDrive extends Entity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), carSerialNumber, clientEmail, score);
+        return Objects.hash(super.hashCode(), carSerialNumber, clientIdentifier, score);
     }
 
     @Override
     public String toString() {
         return "TestDrive{" +
                 "identifier=" + getIdentifier() +
-                ", carSerialNumber='" + carSerialNumber + '\'' +
-                ", clientEmail='" + clientEmail + '\'' +
+                ", carSerialNumber=" + carSerialNumber +
+                ", clientIdentifier=" + clientIdentifier +
                 ", score=" + score +
                 '}';
+    }
+
+    public static class TestDriveBuilder {
+        private Integer carSerialNumber;
+        private Integer clientIdentifier;
+        private Integer identifier;
+        private Integer score;
+
+        public TestDriveBuilder() { }
+
+        public TestDrive build() {
+            return new TestDrive(this);
+        }
+
+        public Integer getCarSerialNumber() {
+            return carSerialNumber;
+        }
+
+        public TestDriveBuilder setCarSerialNumber(Integer carSerialNumber) {
+            this.carSerialNumber = carSerialNumber;
+            return this;
+        }
+
+        public Integer getClientIdentifier() {
+            return clientIdentifier;
+        }
+
+        public TestDriveBuilder setClientIdentifier(Integer clientIdentifier) {
+            this.clientIdentifier = clientIdentifier;
+            return this;
+        }
+
+        public Integer getIdentifier() {
+            return identifier;
+        }
+
+        public TestDriveBuilder setIdentifier(Integer identifier) {
+            this.identifier = identifier;
+            return this;
+        }
+
+        public Integer getScore() {
+            return score;
+        }
+
+        public TestDriveBuilder setScore(Integer score) {
+            this.score = score;
+            return this;
+        }
     }
 }

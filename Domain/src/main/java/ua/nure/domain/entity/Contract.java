@@ -1,18 +1,17 @@
 package ua.nure.domain.entity;
 
-import java.util.Date;
 import java.util.Objects;
 
 public class Contract extends Entity {
     private Integer carSerialNumber;
-    private String clientEmail;
-    private Date date;
+    private Integer clientIdentifier;
+    private String date;
 
-    public Contract(Integer identifier, Integer carSerialNumber, String clientEmail, Date date) {
-        super(identifier);
-        this.carSerialNumber = carSerialNumber;
-        this.clientEmail = clientEmail;
-        this.date = date;
+    private Contract(ContractBuilder contractBuilder) {
+        super(contractBuilder.getIdentifier());
+        setClientIdentifier(contractBuilder.getClientIdentifier());
+        setCarSerialNumber(contractBuilder.getCarSerialNumber());
+        setDate(contractBuilder.getDate());
     }
 
     public Integer getCarSerialNumber() {
@@ -23,19 +22,19 @@ public class Contract extends Entity {
         this.carSerialNumber = carSerialNumber;
     }
 
-    public String getClientEmail() {
-        return clientEmail;
+    public Integer getClientIdentifier() {
+        return clientIdentifier;
     }
 
-    public void setClientEmail(String clientEmail) {
-        this.clientEmail = clientEmail;
+    public void setClientIdentifier(Integer clientIdentifier) {
+        this.clientIdentifier = clientIdentifier;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -46,7 +45,7 @@ public class Contract extends Entity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), carSerialNumber, clientEmail, date);
+        return Objects.hash(super.hashCode(), carSerialNumber, clientIdentifier, date);
     }
 
     @Override
@@ -54,8 +53,57 @@ public class Contract extends Entity {
         return "Contract{" +
                 "identifier=" + getIdentifier() +
                 ", carSerialNumber=" + carSerialNumber +
-                ", clientEmail='" + clientEmail + '\'' +
-                ", date=" + date +
+                ", clientIdentifier='" + clientIdentifier + '\'' +
+                ", date='" + date + '\'' +
                 '}';
+    }
+
+    public static class ContractBuilder {
+        private Integer carSerialNumber;
+        private Integer clientIdentifier;
+        private Integer identifier;
+        private String date;
+
+        public ContractBuilder() { }
+
+        public Contract build() {
+            return new Contract(this);
+        }
+
+        public Integer getCarSerialNumber() {
+            return carSerialNumber;
+        }
+
+        public ContractBuilder setCarSerialNumber(Integer carSerialNumber) {
+            this.carSerialNumber = carSerialNumber;
+            return this;
+        }
+
+        public Integer getClientIdentifier() {
+            return clientIdentifier;
+        }
+
+        public ContractBuilder setClientIdentifier(Integer clientIdentifier) {
+            this.clientIdentifier = clientIdentifier;
+            return this;
+        }
+
+        public Integer getIdentifier() {
+            return identifier;
+        }
+
+        public ContractBuilder setIdentifier(Integer identifier) {
+            this.identifier = identifier;
+            return this;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public ContractBuilder setDate(String date) {
+            this.date = date;
+            return this;
+        }
     }
 }
