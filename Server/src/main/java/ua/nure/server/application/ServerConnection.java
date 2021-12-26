@@ -8,11 +8,14 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Locale;
 
+import ua.nure.domain.entity.Car;
 import ua.nure.server.commands.ChangePasswordServerCommand;
+import ua.nure.server.commands.GetAllCarsServerCommand;
 import ua.nure.server.commands.ServerCommand;
 import ua.nure.server.commands.GetUserServerCommand;
 import ua.nure.server.commands.LoginServerCommand;
 import ua.nure.server.commands.RegistrationServerCommand;
+import ua.nure.server.database.repository.CarRepository;
 import ua.nure.server.database.repository.ClientRepository;
 import utility.CommandsList;
 
@@ -20,6 +23,7 @@ public class ServerConnection extends Thread {
     private volatile Boolean isDisconnected = false;
     private static DataOutputStream dataOutputStream;
     private static ClientRepository clientRepository;
+    private static CarRepository carRepository;
     private static BufferedReader bufferedReader;
     private final Socket socket;
 
@@ -28,6 +32,11 @@ public class ServerConnection extends Thread {
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
         bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         clientRepository = new ClientRepository(Server.getConnectionPool().getConnection());
+        carRepository = new CarRepository(Server.getConnectionPool().getConnection());
+    }
+
+    public static CarRepository getCarRepository() {
+        return carRepository;
     }
 
     public static ClientRepository getClientRepository() {
@@ -80,6 +89,12 @@ public class ServerConnection extends Thread {
                         ((ChangePasswordServerCommand)command).setNewPassword(bufferedReader.readLine());
                         command.execute();
                         System.out.println("[" + getConnectionName() + "]:" + "CHANGE PASSWORD CASE FINISHED");
+                        break;
+                    case CommandsList.GET_ALL_CARS_COMMAND:
+                        System.out.println("[" + getConnectionName() + "]:" + "GET ALL CARS COMMAND CASE STARTED");
+                        command = Server.getCommand(GetAllCarsServerCommand.class.getName());
+                        command.execute();
+                        System.out.println("[" + getConnectionName() + "]:" + "GET ALL CARS COMMAND CASE FINISHED");
                         break;
                     case CommandsList.CLOSE_COMMAND:
                         System.out.println("[" + getConnectionName() + "]:" + "CLOSE CASE STARTED");

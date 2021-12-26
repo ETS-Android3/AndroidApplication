@@ -16,6 +16,7 @@ import java.util.ResourceBundle;
 
 import json.JsonHelper;
 import ua.nure.server.commands.ChangePasswordServerCommand;
+import ua.nure.server.commands.GetAllCarsServerCommand;
 import ua.nure.server.commands.ServerCommand;
 import ua.nure.server.commands.GetUserServerCommand;
 import ua.nure.server.commands.LoginServerCommand;
@@ -110,6 +111,7 @@ public class Server {
         commands.put(RegistrationServerCommand.class.getName(), new RegistrationServerCommand());
         commands.put(GetUserServerCommand.class.getName(), new GetUserServerCommand());
         commands.put(ChangePasswordServerCommand.class.getName(), new ChangePasswordServerCommand());
+        commands.put(GetAllCarsServerCommand.class.getName(), new GetAllCarsServerCommand());
     }
 
     public static void main(String[] args) throws IOException {

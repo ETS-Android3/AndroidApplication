@@ -32,8 +32,13 @@ class Conn {
         String password = "VK07162002";
         Integer poolsCount = 5;
         ConnectionPool connectionPool = new ConnectionPool(dbUrl, dbUser, password, poolsCount);
-        ClientRepository clientRepository = new ClientRepository(connectionPool.getConnection());
-        Client client =new Client(1, "vladyslav.kryvenko@nure.ua", "Vladyslav Kryvenko", "123456", "+380955209171");
-        clientRepository.insert(client);
+        CarRepository carRepository = new CarRepository(connectionPool.getConnection());
+        List<Car> cars = carRepository.getAll();
+        int i = 0;
+        int size = cars.size();
+        while (i<size) {
+            System.out.println(cars.get(i));
+            i++;
+        }
     }
 }

@@ -84,7 +84,10 @@ public class MainActivity extends AppCompatActivity {
         else {
             setContentView(R.layout.activity_main);
         }
+    }
 
+    public void carsListButtonOnClick(View view) {
+        startActivity(new Intent(MainActivity.this, CarsListActivity.class));
 
     }
 

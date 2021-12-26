@@ -11,6 +11,7 @@ public class ClientCommandService {
         clientCommands.put(GetUserClientCommand.class.getName(), new GetUserClientCommand());
         clientCommands.put(LoginClientCommand.class.getName(), new LoginClientCommand());
         clientCommands.put(RegistrationClientCommand.class.getName(), new RegistrationClientCommand());
+        clientCommands.put(GetAllCarsClientCommands.class.getName(), new GetAllCarsClientCommands());
     }
 
     public static ClientCommandService getInstance() {

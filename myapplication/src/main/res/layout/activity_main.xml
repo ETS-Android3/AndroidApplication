@@ -68,10 +68,11 @@
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/imageView14"
                 android:layout_width="match_parent"
                 android:layout_height="236dp"
-                app:srcCompat="@mipmap/ic_banner_audi_inside" />
+                app:srcCompat="@mipmap/ic_banner_audi_inside"
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -111,13 +112,14 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageButton
-            android:id="@+id/imageButton14"
+            android:id="@+id/carsListButton"
             android:layout_width="214dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="#B464BA"
+            android:onClick="carsListButtonOnClick"
             app:srcCompat="@mipmap/ic_car"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck,UsingOnClickInXml" />
 
         <ImageButton
             android:id="@+id/profileButton"
@@ -127,7 +129,7 @@
             android:backgroundTint="#B464BA"
             android:onClick="profileButtonOnClick"
             app:srcCompat="@mipmap/ic_profile"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck,UsingOnClickInXml" />
 
     </LinearLayout>
 
