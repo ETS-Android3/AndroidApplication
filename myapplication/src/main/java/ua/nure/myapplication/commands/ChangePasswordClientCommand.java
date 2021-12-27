@@ -27,7 +27,7 @@ public class ChangePasswordClientCommand extends ClientCommand {
     public String execute() {
         String answer = ClientCommand.NEGATIVE_ANSWER;
         try {
-            dataOutputStream.writeBytes(CommandsList.CHANGE_PASSWORD_COMMAND + "\n" + MainActivity.getLogin() + "\n" + MainActivity.getPassword() + "\n" + newPassword + "\n");
+            dataOutputStream.writeBytes(CommandsList.CHANGE_PASSWORD_COMMAND + "\n" + MainActivity.getClient().getLogin() + "\n" + MainActivity.getClient().getPassword() + "\n" + newPassword + "\n");
             answer = bufferedReader.readLine();
         } catch (IOException e) {
             e.printStackTrace();

@@ -22,7 +22,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         new Thread(() -> {
             ClientCommand command = MainActivity.getClientCommandsHolder().getCommand(GetUserClientCommand.class.getName());
-            if (((GetUserClientCommand)command).execute().equals(ClientCommand.POSITIVE_ANSWER)) {
+            if (command.execute().equals(ClientCommand.POSITIVE_ANSWER)) {
                 Client client = ((GetUserClientCommand)command).getClient();
                 userName.setText(client.getName());
                 userLogin.setText(client.getLogin());

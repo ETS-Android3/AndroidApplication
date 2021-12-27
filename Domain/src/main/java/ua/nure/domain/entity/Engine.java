@@ -1,8 +1,9 @@
 package ua.nure.domain.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Engine extends Entity {
+public class Engine extends Entity implements Serializable {
     private Integer volume;
     private String model;
     private String brand;

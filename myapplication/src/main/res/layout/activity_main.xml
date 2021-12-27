@@ -106,7 +106,7 @@
         android:id="@+id/menuBar"
         android:layout_width="415dp"
         android:layout_height="56dp"
-        android:background="#B464BA"
+        android:background="#3c60e5"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -116,7 +116,7 @@
             android:layout_width="214dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:backgroundTint="#B464BA"
+            android:backgroundTint="#3c60e5"
             android:onClick="carsListButtonOnClick"
             app:srcCompat="@mipmap/ic_car"
             tools:ignore="SpeakableTextPresentCheck,UsingOnClickInXml" />
@@ -126,7 +126,7 @@
             android:layout_width="206dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:backgroundTint="#B464BA"
+            android:backgroundTint="#3c60e5"
             android:onClick="profileButtonOnClick"
             app:srcCompat="@mipmap/ic_profile"
             tools:ignore="SpeakableTextPresentCheck,UsingOnClickInXml" />

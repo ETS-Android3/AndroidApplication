@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidApplication">
         <activity
+            android:name=".activities.MakeContractActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.CarPageActivity"
+            android:exported="false" />
+        <activity
             android:name=".CarsListActivity"
             android:exported="false" />
         <activity

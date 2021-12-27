@@ -11,7 +11,11 @@ public class ClientCommandService {
         clientCommands.put(GetUserClientCommand.class.getName(), new GetUserClientCommand());
         clientCommands.put(LoginClientCommand.class.getName(), new LoginClientCommand());
         clientCommands.put(RegistrationClientCommand.class.getName(), new RegistrationClientCommand());
-        clientCommands.put(GetAllCarsClientCommands.class.getName(), new GetAllCarsClientCommands());
+        clientCommands.put(GetAllCarsClientCommand.class.getName(), new GetAllCarsClientCommand());
+        clientCommands.put(MakeContractClientCommand.class.getName(), new MakeContractClientCommand());
+        clientCommands.put(MakeTestDriveClientCommand.class.getName(), new MakeTestDriveClientCommand());
+        clientCommands.put(GetAllContractsClientCommand.class.getName(), new GetAllContractsClientCommand());
+        clientCommands.put(GetAllTestDrivesClientCommand.class.getName(), new GetAllTestDrivesClientCommand());
     }
 
     public static ClientCommandService getInstance() {

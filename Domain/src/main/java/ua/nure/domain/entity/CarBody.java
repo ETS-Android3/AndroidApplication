@@ -1,8 +1,9 @@
 package ua.nure.domain.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class CarBody extends Entity {
+public class CarBody extends Entity implements Serializable {
     private String usability;
     private Integer length;
     private Integer height;

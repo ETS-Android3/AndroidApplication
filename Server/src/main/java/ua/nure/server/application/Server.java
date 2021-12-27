@@ -17,6 +17,10 @@ import java.util.ResourceBundle;
 import json.JsonHelper;
 import ua.nure.server.commands.ChangePasswordServerCommand;
 import ua.nure.server.commands.GetAllCarsServerCommand;
+import ua.nure.server.commands.GetAllContractsServerCommand;
+import ua.nure.server.commands.GetAllTestDrivesServerCommand;
+import ua.nure.server.commands.MakeContractServerCommand;
+import ua.nure.server.commands.MakeTestDriveServerCommand;
 import ua.nure.server.commands.ServerCommand;
 import ua.nure.server.commands.GetUserServerCommand;
 import ua.nure.server.commands.LoginServerCommand;
@@ -112,6 +116,10 @@ public class Server {
         commands.put(GetUserServerCommand.class.getName(), new GetUserServerCommand());
         commands.put(ChangePasswordServerCommand.class.getName(), new ChangePasswordServerCommand());
         commands.put(GetAllCarsServerCommand.class.getName(), new GetAllCarsServerCommand());
+        commands.put(MakeContractServerCommand.class.getName(), new MakeContractServerCommand());
+        commands.put(MakeTestDriveServerCommand.class.getName(), new MakeTestDriveServerCommand());
+        commands.put(GetAllContractsServerCommand.class.getName(), new GetAllContractsServerCommand());
+        commands.put(GetAllTestDrivesServerCommand.class.getName(), new GetAllTestDrivesServerCommand());
     }
 
     public static void main(String[] args) throws IOException {

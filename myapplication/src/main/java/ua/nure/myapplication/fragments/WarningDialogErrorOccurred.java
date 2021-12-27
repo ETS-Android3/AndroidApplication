@@ -8,8 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-public class WarningDialogPasswordFailed extends DialogFragment {
-    private final String WARNING = "Wrong password.\nTry again!";
+public class WarningDialogErrorOccurred extends DialogFragment {
+    private final String WARNING = "Something went wrong!\nPlease try letter.";
     private final String POSITIVE_BUTTON_TEXT = "OKAY";
 
     @NonNull

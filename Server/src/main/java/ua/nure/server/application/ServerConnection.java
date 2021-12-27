@@ -7,32 +7,41 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Locale;
-
-import ua.nure.domain.entity.Car;
+import json.JsonHelper;
 import ua.nure.server.commands.ChangePasswordServerCommand;
 import ua.nure.server.commands.GetAllCarsServerCommand;
+import ua.nure.server.commands.MakeContractServerCommand;
+import ua.nure.server.commands.MakeTestDriveServerCommand;
 import ua.nure.server.commands.ServerCommand;
 import ua.nure.server.commands.GetUserServerCommand;
 import ua.nure.server.commands.LoginServerCommand;
 import ua.nure.server.commands.RegistrationServerCommand;
+import ua.nure.server.database.ConnectionPool;
 import ua.nure.server.database.repository.CarRepository;
 import ua.nure.server.database.repository.ClientRepository;
+import ua.nure.server.database.repository.ContractRepository;
+import ua.nure.server.database.repository.TestDriveRepository;
 import utility.CommandsList;
 
 public class ServerConnection extends Thread {
-    private volatile Boolean isDisconnected = false;
-    private static DataOutputStream dataOutputStream;
+    private static TestDriveRepository testDriveRepository;
+    private static ContractRepository contractRepository;
     private static ClientRepository clientRepository;
     private static CarRepository carRepository;
+    private static DataOutputStream dataOutputStream;
+    private volatile Boolean isDisconnected = false;
     private static BufferedReader bufferedReader;
     private final Socket socket;
 
     public ServerConnection(Socket socket) throws IOException {
-        this.socket = socket;
+        ConnectionPool.MyConnection connection = Server.getConnectionPool().getConnection();
+        clientRepository = new ClientRepository(connection);
+        carRepository = new CarRepository(connection);
+        contractRepository = new ContractRepository(connection);
+        testDriveRepository = new TestDriveRepository(connection);
         dataOutputStream = new DataOutputStream(socket.getOutputStream());
         bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        clientRepository = new ClientRepository(Server.getConnectionPool().getConnection());
-        carRepository = new CarRepository(Server.getConnectionPool().getConnection());
+        this.socket = socket;
     }
 
     public static CarRepository getCarRepository() {
@@ -45,6 +54,14 @@ public class ServerConnection extends Thread {
 
     public static DataOutputStream getDataOutputStream() {
         return dataOutputStream;
+    }
+
+    public static TestDriveRepository getTestDriveRepository() {
+        return testDriveRepository;
+    }
+
+    public static ContractRepository getContractRepository() {
+        return contractRepository;
     }
 
     private String getConnectionName() {
@@ -95,6 +112,20 @@ public class ServerConnection extends Thread {
                         command = Server.getCommand(GetAllCarsServerCommand.class.getName());
                         command.execute();
                         System.out.println("[" + getConnectionName() + "]:" + "GET ALL CARS COMMAND CASE FINISHED");
+                        break;
+                    case CommandsList.MAKE_CONTRACT_COMMAND:
+                        System.out.println("[" + getConnectionName() + "]:" + "MAKE CONTRACT COMMAND CASE STARTED");
+                        command = Server.getCommand(MakeContractServerCommand.class.getName());
+                        ((MakeContractServerCommand)command).setContract(JsonHelper.parseJsonIntoContract(bufferedReader.readLine()));
+                        command.execute();
+                        System.out.println("[" + getConnectionName() + "]:" + "MAKE CONTRACT COMMAND CASE FINISHED");
+                        break;
+                    case CommandsList.MAKE_TEST_DRIVE_COMMAND:
+                        System.out.println("[" + getConnectionName() + "]:" + "MAKE TEST DRIVE COMMAND CASE STARTED");
+                        command = Server.getCommand(MakeTestDriveServerCommand.class.getName());
+                        ((MakeTestDriveServerCommand)command).setTestDrive(JsonHelper.parseJsonIntoTestDrive(bufferedReader.readLine()));
+                        command.execute();
+                        System.out.println("[" + getConnectionName() + "]:" + "MAKE TEST DRIVE COMMAND CASE FINISHED");
                         break;
                     case CommandsList.CLOSE_COMMAND:
                         System.out.println("[" + getConnectionName() + "]:" + "CLOSE CASE STARTED");

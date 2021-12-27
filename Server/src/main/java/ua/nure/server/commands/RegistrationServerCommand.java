@@ -1,14 +1,10 @@
 package ua.nure.server.commands;
 
-import com.google.gson.Gson;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
-
 import json.JsonHelper;
-import oracle.ons.Cli;
 import ua.nure.domain.entity.Client;
-import ua.nure.server.application.Server;
 import ua.nure.server.application.ServerConnection;
 import ua.nure.server.exception.RepositoryException;
 
@@ -20,6 +16,7 @@ public class RegistrationServerCommand extends ServerCommand {
     public void setClient(String jsonClient) {
         mainClient = JsonHelper.parseJsonIntoClient(jsonClient);
     }
+
     @Override
     public void execute() {
         try {
@@ -31,7 +28,8 @@ public class RegistrationServerCommand extends ServerCommand {
             } else {
                 assert false;
                 ServerConnection.getClientRepository().insert(mainClient);
-                dataOutputStream.writeBytes(ServerCommand.POSITIVE_ANSWER);
+                client = ServerConnection.getClientRepository().getByLogin(mainClient.getLogin());
+                dataOutputStream.writeBytes(ServerCommand.POSITIVE_ANSWER + JsonHelper.covertClientToJson(client) + "\n");
             }
         } catch (RepositoryException | IOException e) {
             e.printStackTrace();

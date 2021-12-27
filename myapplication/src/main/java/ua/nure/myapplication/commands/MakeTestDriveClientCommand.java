@@ -1,51 +1,49 @@
 package ua.nure.myapplication.commands;
 
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
 import json.JsonHelper;
+import ua.nure.domain.entity.Car;
 import ua.nure.domain.entity.Client;
+import ua.nure.domain.entity.TestDrive;
 import ua.nure.myapplication.MainActivity;
 import utility.CommandsList;
 
-public class LoginClientCommand extends ClientCommand {
+public class MakeTestDriveClientCommand extends ClientCommand {
     private final DataOutputStream dataOutputStream;
     private final BufferedReader bufferedReader;
+    private Car car;
     private Client client;
-    private String login;
-    private String password;
 
-    public LoginClientCommand() {
+    public MakeTestDriveClientCommand() {
         dataOutputStream = MainActivity.getDataOutputStream();
         bufferedReader = MainActivity.getBufferedReader();
     }
 
-    public LoginClientCommand setLogin(String login) {
-        this.login = login;
-        return this;
+    public void setCar(Car car) {
+        this.car = car;
     }
 
-    public LoginClientCommand setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public Client getClient() {
-        return client;
+    public void setClient(Client client) {
+        this.client = client;
     }
 
     @Override
     public String execute() {
         String answer = ClientCommand.NEGATIVE_ANSWER;
         try {
-            dataOutputStream.writeBytes(CommandsList.LOGIN_COMMAND + "\n" + login + "\n" + password + "\n");
+            TestDrive.TestDriveBuilder testDriveBuilder = new TestDrive.TestDriveBuilder();
+            testDriveBuilder.setClientIdentifier(client.getIdentifier());
+            testDriveBuilder.setCarSerialNumber(car.getSerialNumber());
+            testDriveBuilder.setScore(7);
+            dataOutputStream.writeBytes(CommandsList.MAKE_TEST_DRIVE_COMMAND + "\n" + JsonHelper.convertTestDriveToJson(testDriveBuilder.build()) + "\n");
             answer = bufferedReader.readLine();
-            client = JsonHelper.parseJsonIntoClient(bufferedReader.readLine());
         } catch (IOException e) {
             e.printStackTrace();
         }
         return answer;
     }
+
 }

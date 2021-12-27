@@ -30,13 +30,13 @@ public class SettingsActivity extends AppCompatActivity {
 
         if (oldPassword.equals(CommandsList.EMPTY_STRING) || newPassword.equals(CommandsList.EMPTY_STRING)) {
             MainActivity.getWarningsHelper().showFragment(this, WarningDialogFilingTheGaps.class.getName());
-        } else if (!MainActivity.getPassword().equals(oldPassword))  {
+        } else if (!MainActivity.getClient().getPassword().equals(oldPassword))  {
             MainActivity.getWarningsHelper().showFragment(this, WarningDialogPasswordFailed.class.getName());
         } else {
             new Thread(() -> {
                 ClientCommand command = MainActivity.getClientCommandsHolder().getCommand(ChangePasswordClientCommand.class.getName());
                 if (((ChangePasswordClientCommand)command).setNewPassword(newPassword).execute().equals(ClientCommand.POSITIVE_ANSWER)) {
-                    MainActivity.setPassword(newPassword);
+                    MainActivity.getClient().setPassword(newPassword);
                     MainActivity.getWarningsHelper().showFragment(this, WarningDialogPasswordSucceed.class.getName());
                     this.finish();
                 }

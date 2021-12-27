@@ -3,7 +3,7 @@ package ua.nure.domain.entity;
 public abstract class Entity {
     private Integer identifier;
 
-    private Entity() {
+    public Entity() {
         identifier = -1;
     }
 

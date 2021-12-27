@@ -1,10 +1,11 @@
 package ua.nure.domain.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Car extends Entity {
-    private Engine engine;
-    private CarBody body;
+public class Car extends Entity implements Serializable {
+    private  Engine engine;
+    private  CarBody body;
     private String manufacturerCountry;
     private Integer serialNumber;
     private String manufactureDate;
@@ -12,6 +13,8 @@ public class Car extends Entity {
     private String carLine;
     private String brand;
     private Long price;
+
+    public Car() { }
 
     private Car(CarBuilder carBuilder) {
         super(carBuilder.getIdentifier());
@@ -124,7 +127,7 @@ public class Car extends Entity {
                 '}';
     }
 
-    public static class CarBuilder {
+    public static class CarBuilder implements Serializable {
         private Engine engine;
         private CarBody body;
         private Integer identifier;

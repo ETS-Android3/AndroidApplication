@@ -9,8 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 public class WarningDialogFilingTheGaps extends DialogFragment {
-    private final String WARNING = "Все поля должны быть заполнены!";
-    private final String POSITIVE_BUTTON_TEXT = "OK";
+    private final String WARNING = "Fill all the gaps!";
+    private final String POSITIVE_BUTTON_TEXT = "OKAY";
 
     @NonNull
     @Override

@@ -2,6 +2,8 @@ package ua.nure.server.commands;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+
+import json.JsonHelper;
 import ua.nure.domain.entity.Client;
 import ua.nure.server.application.ServerConnection;
 import ua.nure.server.exception.RepositoryException;
@@ -29,7 +31,7 @@ public class LoginServerCommand extends ServerCommand {
                 if (!password.equals(client.getPassword())) {
                     dataOutputStream.writeBytes(ServerCommand.NEGATIVE_ANSWER);
                 } else {
-                    dataOutputStream.writeBytes(ServerCommand.POSITIVE_ANSWER);
+                    dataOutputStream.writeBytes(ServerCommand.POSITIVE_ANSWER  + JsonHelper.covertClientToJson(client) + "\n");
                 }
             } else {
                 dataOutputStream.writeBytes(ServerCommand.NEGATIVE_ANSWER);

@@ -9,8 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 public class WarningDialogNoExistingUser extends DialogFragment {
-    private final String WARNING = "Неверный пароль или логин!";
-    private final String POSITIVE_BUTTON_TEXT = "OK";
+    private final String WARNING = "Wrong login or password!";
+    private final String POSITIVE_BUTTON_TEXT = "OKAY";
 
     @NonNull
     @Override

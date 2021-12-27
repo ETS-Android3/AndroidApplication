@@ -37,13 +37,13 @@ public class RegistrationActivity extends AppCompatActivity {
             new Thread(() -> {
                 ClientCommand command = MainActivity.getClientCommandsHolder().getCommand(RegistrationClientCommand.class.getName());
                 ((RegistrationClientCommand)command).setClient(new Client(0, email, name, password, phone));
-                if (((RegistrationClientCommand)command).execute().equals(ClientCommand.NEGATIVE_ANSWER)) {
+                if (command.execute().equals(ClientCommand.NEGATIVE_ANSWER)) {
                     MainActivity.getWarningsHelper().showFragment(this, WarningDialogAlreadyExistingUser.class.getName());
                     editEmail.setText(CommandsList.EMPTY_STRING);
                 } else {
+                    MainActivity.setClient(((RegistrationClientCommand) command).getClient());
+                    System.out.println(MainActivity.getClient());
                     MainActivity.setViewableState(true);
-                    MainActivity.setPassword(password);
-                    MainActivity.setLogin(email);
 
                     startActivity(new Intent(RegistrationActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();

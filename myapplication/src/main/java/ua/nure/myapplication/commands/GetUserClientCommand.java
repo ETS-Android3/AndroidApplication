@@ -26,7 +26,7 @@ public class GetUserClientCommand extends ClientCommand {
     public String execute() {
         String answer = ClientCommand.NEGATIVE_ANSWER;
         try {
-            dataOutputStream.writeBytes(CommandsList.GET_USER_COMMAND +"\n" + MainActivity.getLogin() + "\n");
+            dataOutputStream.writeBytes(CommandsList.GET_USER_COMMAND + "\n" + MainActivity.getClient().getLogin() + "\n");
             answer = bufferedReader.readLine();
             if (answer.equals(ClientCommand.POSITIVE_ANSWER)){
                 client = JsonHelper.parseJsonIntoClient(bufferedReader.readLine());

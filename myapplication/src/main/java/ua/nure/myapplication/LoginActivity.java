@@ -37,8 +37,7 @@ public class LoginActivity extends AppCompatActivity {
                     MainActivity.getWarningsHelper().showFragment(this, WarningDialogNoExistingUser.class.getName());
                 } else {
                     MainActivity.setViewableState(true);
-                    MainActivity.setPassword(password);
-                    MainActivity.setLogin(email);
+                    MainActivity.setClient(((LoginClientCommand)command).getClient());
                     startActivity(new Intent(LoginActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     finish();
                 }

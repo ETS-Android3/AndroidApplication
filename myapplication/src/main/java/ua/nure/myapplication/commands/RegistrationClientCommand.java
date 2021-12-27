@@ -24,12 +24,19 @@ public class RegistrationClientCommand extends ClientCommand{
         this.client = client;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
     @Override
     public String execute() {
         String answer = ClientCommand.NEGATIVE_ANSWER;
         try {
-            dataOutputStream.writeBytes(CommandsList.REGISTRATION_COMMAND + "\n" + JsonHelper.CovertClientToJson(client) + "\n");
+            dataOutputStream.writeBytes(CommandsList.REGISTRATION_COMMAND + "\n" + JsonHelper.covertClientToJson(client) + "\n");
             answer = bufferedReader.readLine();
+            if (answer.equals(ClientCommand.POSITIVE_ANSWER)) {
+                client = JsonHelper.parseJsonIntoClient(bufferedReader.readLine());
+            }
         } catch (
                 IOException e) {
             e.printStackTrace();

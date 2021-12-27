@@ -12,20 +12,23 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import ua.nure.domain.entity.Client;
 import ua.nure.myapplication.commands.ClientCommandService;
 import ua.nure.myapplication.fragments.WarningsHelper;
 import ua.nure.server.application.Server;
 
 public class MainActivity extends AppCompatActivity {
-    private static Boolean connectedState = false;
-    private static Boolean viewableState = false;
-    private Socket socket = null;
-    private static DataOutputStream dataOutputStream;
-    private static BufferedReader bufferedReader;
-    private static String login;
-    private static String password;
     private static final WarningsHelper warningsHelper = WarningsHelper.getInstance();
     private static ClientCommandService clientCommandsHolder;
+    private static Boolean connectedState = false;
+    private static Boolean viewableState = false;
+    private static DataOutputStream dataOutputStream;
+    private static BufferedReader bufferedReader;
+    private Socket socket = null;
+    private static Client client;
+
+
+
 
     public static void setViewableState(Boolean state) {
         viewableState = state;
@@ -35,31 +38,34 @@ public class MainActivity extends AppCompatActivity {
         connectedState = state;
     }
 
-    public static ClientCommandService getClientCommandsHolder() {
-        return clientCommandsHolder;
+    public static Client getClient() {
+        return client;
     }
-    public static WarningsHelper getWarningsHelper() {
-        return warningsHelper;
-    }
-    public static String getLogin() {
-        return login;
-    }
-    public static void setLogin(String slogin) {
-         login = slogin;
-    }
-    public static String getPassword() {
-        return password;
-    }
-    public static void setPassword(String otherPassword) {
-        password = otherPassword;
+
+    public static void setClient(Client someClient) {
+        client = someClient;
     }
 
     public static DataOutputStream getDataOutputStream() {
         return dataOutputStream;
     }
+
     public static BufferedReader getBufferedReader() {
         return bufferedReader;
     }
+
+    public static ClientCommandService getClientCommandsHolder() {
+        return clientCommandsHolder;
+    }
+
+    public static WarningsHelper getWarningsHelper() {
+        return warningsHelper;
+    }
+
+
+
+
+
 
 
     @Override

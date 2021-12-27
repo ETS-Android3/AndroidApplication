@@ -9,8 +9,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 public class WarningDialogAlreadyExistingUser extends DialogFragment {
-    private final String WARNING = "Пользователь с такой почтой уже существует!";
-    private final String POSITIVE_BUTTON_TEXT = "OK";
+    private final String WARNING = "A user with this mail already exist!";
+    private final String POSITIVE_BUTTON_TEXT = "OKAY";
 
     @NonNull
     @Override

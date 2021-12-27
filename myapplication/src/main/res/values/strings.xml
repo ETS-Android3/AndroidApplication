@@ -6,5 +6,9 @@
     <string name="user_password">Password</string>
     <string name="user_phone">Phone</string>
     <string name="confirm">CONFIRM</string>
+    <string name="car_body_information">Car Body Information</string>
+    <string name="car_information">Car Information</string>
+    <string name="engine_information">Engine Information</string>
+    <string name="price_information">Price Information</string>
 
 </resources>

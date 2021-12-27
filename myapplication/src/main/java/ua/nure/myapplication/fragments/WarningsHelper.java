@@ -15,6 +15,10 @@ public class WarningsHelper {
         warningsFragments.put(WarningDialogPasswordFailed.class.getName(), new WarningDialogPasswordFailed());
         warningsFragments.put(WarningDialogPasswordSucceed.class.getName(), new WarningDialogPasswordSucceed());
         warningsFragments.put(WarningDialogFilingTheGaps.class.getName(), new WarningDialogFilingTheGaps());
+        warningsFragments.put(WarningDialogAddedContract.class.getName(), new WarningDialogAddedContract());
+        warningsFragments.put(WarningDialogAddedTestDrive.class.getName(), new WarningDialogAddedTestDrive());
+        warningsFragments.put(WarningDialogErrorOccurred.class.getName(), new WarningDialogErrorOccurred());
+        warningsFragments.put(WarningDialogAlreadyClicked.class.getName(), new WarningDialogAlreadyClicked());
     }
 
     public static WarningsHelper getInstance() {
