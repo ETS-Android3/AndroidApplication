@@ -5,7 +5,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import json.JsonHelper;
 import ua.nure.domain.entity.Client;
-import ua.nure.myapplication.MainActivity;
+import ua.nure.myapplication.activities.MainActivity;
 import utility.CommandsList;
 
 public class GetUserClientCommand extends ClientCommand {

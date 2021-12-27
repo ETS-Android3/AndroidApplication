@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import json.JsonHelper;
 import ua.nure.domain.entity.Car;
-import ua.nure.myapplication.MainActivity;
+import ua.nure.myapplication.activities.MainActivity;
 import utility.CommandsList;
 
 public class GetAllCarsClientCommand extends ClientCommand{

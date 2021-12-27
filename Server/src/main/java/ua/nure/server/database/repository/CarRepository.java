@@ -65,7 +65,7 @@ public class CarRepository extends Repository<Car> implements IRepository<Car> {
         Car.CarBuilder carBuilder = new Car.CarBuilder()
                 .setIdentifier(resultSet.getInt("CAR_SERIAL_NUMBER"))
                 .setSerialNumber(resultSet.getInt("CAR_SERIAL_NUMBER"))
-                .setPrice(resultSet.getLong("CAR_PRICE"))
+                .setPrice(resultSet.getInt("CAR_PRICE"))
                 .setBrand(resultSet.getString("CAR_BRAND"))
                 .setCarLine(resultSet.getString("CAR_LINE"))
                 .setPhotoPath(resultSet.getString("CAR_PHOTO"))

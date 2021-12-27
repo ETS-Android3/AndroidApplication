@@ -1,6 +1,11 @@
 package json;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.List;
+
 import ua.nure.domain.entity.Car;
 import ua.nure.domain.entity.CarBody;
 import ua.nure.domain.entity.Client;
@@ -58,4 +63,24 @@ public class JsonHelper {
     public static Contract parseJsonIntoContract(String json) {
         return gson.fromJson(json, Contract.class);
     }
+
+    public static String convertContractsListToJson(List<Contract> contracts) {
+        return gson.toJson(contracts);
+    }
+
+    public static List<Contract> parseJsonIntoContractsList(String json) {
+        Type type = new TypeToken<List<Contract>>(){}.getType();
+        return gson.fromJson(json, type);
+    }
+
+    public static String convertTestDrivesListToJson(List<TestDrive> testDrives) {
+        return gson.toJson(testDrives);
+    }
+
+    public static List<TestDrive> parseJsonIntoTestDrivesList(String json) {
+        Type type = new TypeToken<List<TestDrive>>(){}.getType();
+        return gson.fromJson(json, type);
+    }
+
+
 }

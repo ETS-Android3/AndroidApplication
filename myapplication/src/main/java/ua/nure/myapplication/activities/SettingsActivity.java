@@ -1,4 +1,4 @@
-package ua.nure.myapplication;
+package ua.nure.myapplication.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import ua.nure.myapplication.R;
 import ua.nure.myapplication.commands.ChangePasswordClientCommand;
 import ua.nure.myapplication.commands.ClientCommand;
 import ua.nure.myapplication.fragments.WarningDialogFilingTheGaps;

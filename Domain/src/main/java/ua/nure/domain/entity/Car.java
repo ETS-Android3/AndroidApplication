@@ -12,7 +12,7 @@ public class Car extends Entity implements Serializable {
     private String photoPath;
     private String carLine;
     private String brand;
-    private Long price;
+    private Integer price;
 
     public Car() { }
 
@@ -93,11 +93,11 @@ public class Car extends Entity implements Serializable {
         this.brand = brand;
     }
 
-    public Long getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
@@ -137,7 +137,7 @@ public class Car extends Entity implements Serializable {
         private String photoPath;
         private String carLine;
         private String brand;
-        private Long price;
+        private Integer price;
 
         public CarBuilder() { }
 
@@ -226,11 +226,11 @@ public class Car extends Entity implements Serializable {
             return this;
         }
 
-        public Long getPrice() {
+        public Integer getPrice() {
             return price;
         }
 
-        public CarBuilder setPrice(Long price) {
+        public CarBuilder setPrice(Integer price) {
             this.price = price;
             return this;
         }

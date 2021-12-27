@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import ua.nure.domain.entity.Client;
 import ua.nure.domain.entity.Contract;
 import ua.nure.server.database.ConnectionPool;
 import ua.nure.server.exception.ConnectionException;
@@ -12,6 +13,7 @@ import ua.nure.server.exception.RepositoryException;
 public class ContractRepository extends Repository<Contract> implements IRepository<Contract>{
     private static final String INSERT_INTO = "INSERT INTO CONTRACT(ID, CLIENT_ID, CAR_SERIAL_NUMBER, cDATE) VALUES (CONTR_SQNC.NEXTVAL,?,?,?)";
     private static final String SELECT_BY_ID = "SELECT * FROM CONTRACT WHERE ID=?";
+    private static final String SELECT_BY_CLIENT_ID = "SELECT * FROM CONTRACT WHERE CLIENT_ID=?";
     private static final String SELECT_ALL = "SELECT * FROM CONTRACT";
 
     public ContractRepository(ConnectionPool.MyConnection myConnection) {
@@ -20,6 +22,14 @@ public class ContractRepository extends Repository<Contract> implements IReposit
 
     public void insert(Contract contract) throws RepositoryException {
         try (ResultSet ignored = myConnection.executeQuery(INSERT_INTO, contract.getClientIdentifier(), contract.getCarSerialNumber(), contract.getDate())) {
+        } catch (SQLException | ConnectionException exception) {
+            throw new RepositoryException(exception.getMessage());
+        }
+    }
+
+    public List<Contract> getAllByClient(Client client) throws RepositoryException {
+        try (ResultSet resultSet = myConnection.executeQuery(SELECT_BY_CLIENT_ID, client.getIdentifier())) {
+            return toEntityList(resultSet);
         } catch (SQLException | ConnectionException exception) {
             throw new RepositoryException(exception.getMessage());
         }

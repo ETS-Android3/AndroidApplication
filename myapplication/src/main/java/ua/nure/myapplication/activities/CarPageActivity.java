@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import ua.nure.domain.entity.Car;
-import ua.nure.myapplication.MainActivity;
 import ua.nure.myapplication.R;
 import ua.nure.myapplication.commands.ClientCommand;
 import ua.nure.myapplication.commands.MakeContractClientCommand;

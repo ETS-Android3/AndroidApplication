@@ -8,7 +8,7 @@ import json.JsonHelper;
 import ua.nure.domain.entity.Car;
 import ua.nure.domain.entity.Client;
 import ua.nure.domain.entity.TestDrive;
-import ua.nure.myapplication.MainActivity;
+import ua.nure.myapplication.activities.MainActivity;
 import utility.CommandsList;
 
 public class MakeTestDriveClientCommand extends ClientCommand {

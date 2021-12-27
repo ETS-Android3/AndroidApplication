@@ -10,5 +10,7 @@
     <string name="car_information">Car Information</string>
     <string name="engine_information">Engine Information</string>
     <string name="price_information">Price Information</string>
+    <string name="topic">Topic</string>
+    <string name="serial_number">Serial number</string>
 
 </resources>

@@ -10,6 +10,8 @@ import java.util.Locale;
 import json.JsonHelper;
 import ua.nure.server.commands.ChangePasswordServerCommand;
 import ua.nure.server.commands.GetAllCarsServerCommand;
+import ua.nure.server.commands.GetAllContractsServerCommand;
+import ua.nure.server.commands.GetAllTestDrivesServerCommand;
 import ua.nure.server.commands.MakeContractServerCommand;
 import ua.nure.server.commands.MakeTestDriveServerCommand;
 import ua.nure.server.commands.ServerCommand;
@@ -126,6 +128,20 @@ public class ServerConnection extends Thread {
                         ((MakeTestDriveServerCommand)command).setTestDrive(JsonHelper.parseJsonIntoTestDrive(bufferedReader.readLine()));
                         command.execute();
                         System.out.println("[" + getConnectionName() + "]:" + "MAKE TEST DRIVE COMMAND CASE FINISHED");
+                        break;
+                    case CommandsList.GET_ALL_CONTRACTS_COMMAND:
+                        System.out.println("[" + getConnectionName() + "]:" + "GET ALL CONTRACTS COMMAND CASE STARTED");
+                        command = Server.getCommand(GetAllContractsServerCommand.class.getName());
+                        ((GetAllContractsServerCommand)command).setClient(JsonHelper.parseJsonIntoClient(bufferedReader.readLine()));
+                        command.execute();
+                        System.out.println("[" + getConnectionName() + "]:" + "GET ALL CONTRACTS COMMAND CASE FINISHED");
+                        break;
+                    case CommandsList.GET_ALL_TEST_DRIVES_COMMAND:
+                        System.out.println("[" + getConnectionName() + "]:" + "GET ALL TEST DRIVES COMMAND CASE STARTED");
+                        command = Server.getCommand(GetAllTestDrivesServerCommand.class.getName());
+                        ((GetAllTestDrivesServerCommand)command).setClient(JsonHelper.parseJsonIntoClient(bufferedReader.readLine()));
+                        command.execute();
+                        System.out.println("[" + getConnectionName() + "]:" + "GET ALL TEST DRIVES COMMAND CASE FINISHED");
                         break;
                     case CommandsList.CLOSE_COMMAND:
                         System.out.println("[" + getConnectionName() + "]:" + "CLOSE CASE STARTED");

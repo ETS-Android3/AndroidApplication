@@ -1,4 +1,4 @@
-package ua.nure.myapplication;
+package ua.nure.myapplication.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.AdapterView;
 import android.widget.ListView;
-
 import java.util.ArrayList;
 import java.util.List;
 import ua.nure.domain.entity.Car;
-import ua.nure.myapplication.activities.CarPageActivity;
+import ua.nure.myapplication.R;
 import ua.nure.myapplication.adapters.CarAdapter;
 import ua.nure.myapplication.adapters.CarListItem;
 import ua.nure.myapplication.commands.ClientCommand;
@@ -19,7 +18,7 @@ import ua.nure.myapplication.commands.GetAllCarsClientCommand;
 public class CarsListActivity extends AppCompatActivity {
     private final ArrayList<CarListItem> carListItems = new ArrayList<>();
     private List<Car> cars;
-    private volatile ListView carsList;
+    private ListView carsList;
     private CarAdapter carAdapter;
 
 
@@ -33,7 +32,6 @@ public class CarsListActivity extends AppCompatActivity {
         new Thread(()  -> {
             ClientCommand command = MainActivity.getClientCommandsHolder().getCommand(GetAllCarsClientCommand.class.getName());
             command.execute();
-            if (cars!=null) { System.out.println(cars.size()); }
             cars = ((GetAllCarsClientCommand) command).getCars();
 
             int index = 0;

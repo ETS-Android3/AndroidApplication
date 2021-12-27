@@ -1,4 +1,4 @@
-package ua.nure.myapplication;
+package ua.nure.myapplication.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 import ua.nure.domain.entity.Client;
+import ua.nure.myapplication.R;
 import ua.nure.myapplication.commands.ClientCommandService;
 import ua.nure.myapplication.fragments.WarningsHelper;
 import ua.nure.server.application.Server;
@@ -26,9 +27,6 @@ public class MainActivity extends AppCompatActivity {
     private static BufferedReader bufferedReader;
     private Socket socket = null;
     private static Client client;
-
-
-
 
     public static void setViewableState(Boolean state) {
         viewableState = state;
@@ -61,12 +59,6 @@ public class MainActivity extends AppCompatActivity {
     public static WarningsHelper getWarningsHelper() {
         return warningsHelper;
     }
-
-
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
