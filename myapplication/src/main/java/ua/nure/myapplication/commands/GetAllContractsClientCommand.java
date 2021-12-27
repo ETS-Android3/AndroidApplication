@@ -51,6 +51,7 @@ public class GetAllContractsClientCommand extends ClientCommand {
 
             if (answer.equals(ClientCommand.POSITIVE_ANSWER)) {
                 contracts = JsonHelper.parseJsonIntoContractsList(bufferedReader.readLine());
+
                 if (command.execute().equals(ClientCommand.POSITIVE_ANSWER)) {
                     cars = ((GetAllCarsClientCommand)command).getCars();
 

@@ -42,7 +42,9 @@ public class LoginClientCommand extends ClientCommand {
         try {
             dataOutputStream.writeBytes(CommandsList.LOGIN_COMMAND + "\n" + login + "\n" + password + "\n");
             answer = bufferedReader.readLine();
-            client = JsonHelper.parseJsonIntoClient(bufferedReader.readLine());
+            if(answer.equals(ClientCommand.POSITIVE_ANSWER)) {
+                client = JsonHelper.parseJsonIntoClient(bufferedReader.readLine());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

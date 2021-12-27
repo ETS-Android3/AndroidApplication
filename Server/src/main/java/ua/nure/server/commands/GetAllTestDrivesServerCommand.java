@@ -31,6 +31,8 @@ public class GetAllTestDrivesServerCommand extends ServerCommand {
             if (testDrives.size() > 0) {
                 dataOutputStream.writeBytes(ServerCommand.POSITIVE_ANSWER);
                 dataOutputStream.writeBytes(JsonHelper.convertTestDrivesListToJson(testDrives) + "\n");
+            } else {
+                dataOutputStream.writeBytes(ServerCommand.NEGATIVE_ANSWER);
             }
         } catch (RepositoryException | IOException e) {
             e.printStackTrace();
